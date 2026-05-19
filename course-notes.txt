@@ -1,0 +1,222 @@
+C++ Data Structures & Algorithms + LEETCODE Exercises
+from Udemy
+
+----------------------------------------------------------------------------------------
+
+Big O Cheat Sheet:  https://www.bigocheatsheet.com/
+
+----------------------------------------------------------------------------------------
+
+Visual Studio Commands:
+
+Compile .cpp file:
+    g++ file.cpp -o file.exe
+    - 'g++'  compiler
+    - 'file.cpp'  is the source code
+    - '-o hello.exe'  is the output executable name
+
+Run .exe file from terminal:
+    ./file.exe
+
+5/18/2026 ----------------------------------------------------------------------------------------
+
+8. Big O: Intro  +  9. Big O: Worst Case
+
+Big O Notation
+    Describes how the runtime or memory usage of an algorithm grows as the input size grows.
+    Used to compare algorithm efficiency, especially when working with large datasets.
+
+Time Complexity - A measurement based on 'number of operations' that it takes to 
+                  complete something
+                  *Number of operations/steps
+                        Lower is faster
+                  How fast the program runs
+                  Does not measure time in seconds/milliseconds because this unit can be
+                  dependent on system speed
+                  Counting loops, recursive calls, and basic operations
+
+Space Complexity - The total amount of memory or storage space required by an algorithm to run until completion
+                   *Memory units (RAM/Storage)
+                        Lower is better
+                        Lower is efficient
+                        Less memory usage
+                   How much memory the program uses
+                        input variables
+                        auxiliary space / extra memory from temporary data or recursion stacks
+                   Counting variables, data structures, and the recursion stack
+
+*Optimizing for one requires sacrificing the other
+
+Big O,  Greek Letters
+    - Omega    -->   Best Case (least operations)
+                        Big O(Ω) 
+                        * Alt + 234 
+    - Theta    -->   Average Case
+                        Big O(Θ)    
+                        * Alt + 233 
+    - Omicron  -->   Worst Case
+                        Big O(Ο) 
+                        * Capital O
+
+* "Technically, there is no 'average case' or 'best case' for 'Big O' but some people 
+    will still use these greek letters
+* 'Big O' is always worst case.
+
+----------------------------------------------------------------------------------------
+
+10. Big O: O(n)
+
+O(n)
+    Reads as:
+        'O' of 'n'
+    O(n) means linear time complexity
+    It is always 'Proportional'
+    This can be seen in loops
+    looping code,
+        n = 5,  about 5 operations
+        n = 1000,  about 1000 operations
+
+----------------------------------------------------------------------------------------
+
+11. Big O: Drop Constants
+
+Rules of Simplification
+    OR
+Simplification Rules:
+    1) Drop Constants
+        Ignore fixed numbers when describing algorithm growth
+
+Don't write this,   O(2n)
+Keep it simple,     O(n)
+                    *Drop the Constant
+
+This keeps O(n) distinct from other Big O notation that involves exponentially larger Time Complexity
+    such as O(n²).
+
+----------------------------------------------------------------------------------------
+
+12. Big O: O(n²)
+
+O(n²)
+    'O of n squared'
+    Also called, 'quadratic time complexity' 
+    It means that an algorithm’s running time grows proportionally to the square of 'n'
+    It usually happens in nested loops
+        The outer loop runs 'n' times
+            the inner loop runs 'n' times
+        n * n = n²
+    Time Complexity increases VERY fast
+    O(n²) algorithms become slow with large datasets
+    If you have 1,000 items:
+        O(n) ≈ 1,000 operations
+        O(n²) ≈ 1,000,000 operations
+
+----------------------------------------------------------------------------------------
+
+13. Big O: Drop Non-Dominants
+
+Rule of Simplification:
+    2) Drop Non-Dominants
+            Don't write,  O(n² + n)
+            Just write,   O(n²)
+                        *Drop the 'n'
+                        'n' becomes insignificant as 'n' becomes larget for 'n²'
+
+----------------------------------------------------------------------------------------
+
+14. Big O: O(1)
+
+O(1)
+    'O of one'
+    Called, 'constant time complexity'
+    It means the algorithm takes the same amount of time no matter how large the input becomes
+    The most efficient Big O
+
+    n + n =       O(2)
+    n + n + n =   O(3)
+    Simplified as,  O(1)
+
+----------------------------------------------------------------------------------------
+
+15. Big O: O(log n)
+
+O(log n)
+    'O log of n'
+    Called 'Logarithmic time complexity'
+    Often refer as, 'Divide and Conquer'
+    It means the algorithm gets rid of a large portion of the data each step instead of 
+        checking every item one by one.
+    For 1 million items:
+        O(n) may need 1,000,000 checks
+        O(log n) needs about 20 checks
+
+Logarithmic algorithms are considered very fast for searching large datasets
+
+----
+
+O(n log n)
+    'O of n log n'
+    This algorithm performs:
+        'n' work
+        combined with logarithmic splitting or processing
+    This is the most efficient sorting algorithms use it
+    It is one of the most important time complexities
+
+----------------------------------------------------------------------------------------
+
+16. Big O: Different Terms for Inputs
+
+void function(int a, int b){
+    for (int i=0; i < a; i++)       O(n)
+    for (int i=0; i < b; i++)       O(n)
+}                                   
+
+Wrong notation,     O(2n) or O(n)
+Correct notation,   O(a + b)
+    because there are two seperate arguments 'a' and 'b'
+    O(a + b) is as far as it can be simplified
+
+Likewise, if a function has two different arguments utilizing nested for loops
+
+void function(int a, int b){
+    for (int i=0; i < a; i++)       O(a)
+    {  for (int=0; i < b; i++) }    O(b)
+}
+
+Correct Notation, O(a * b)
+
+----------------------------------------------------------------------------------------
+
+17. Big O: Vectors
+
+Talking points below can apply to arrays
+
+Adding or removing an element from the 'End' of a dataset is O(1) (constant time complexity)
+    this is very simple and requires the least operations
+
+Adding or removing an element from the 'Front' of a dataset is O(n) (linear time complexity)
+    because the 'index' of each element after it has to be shifted back by 1
+    *It will remain as O(n) if we add/remove an element at a specific index
+
+Finding an element value is O(n) because we have to look at the value at each index
+
+Finding an element by index O(1) because we know the memory address/location
+
+----------------------------------------------------------------------------------------
+
+18. Big O: Wrap Up
+
+Talking Points
+    - O(n²) grows very fast and is inefficient
+        - some O(n²) algorithms can be rewritten to O(n), which makes a huge difference
+        - a loop within a loop
+    - O(n) is proportional AKA linear time complexity
+    - O(log n) Divide and Conquer
+
+Big O Cheat Sheet
+    - https://www.bigocheatsheet.com/
+    - provides helpful charts and graphs to help visualize and understand Time Complexity
+        for functions from all types of data structures
+    - provides Time Complexity & Space Complexity chart for Array Sorting Algorithms
+
+
