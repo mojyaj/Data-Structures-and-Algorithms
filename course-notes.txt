@@ -1,6 +1,16 @@
 C++ Data Structures & Algorithms + LEETCODE Exercises
 from Udemy
 
+Personal Thoughts on Course
+    - Instructor focus too much on visuals and visual cues to teach Big O and does not give me the
+        concise definitions for the various Big O notations
+        - Over simplified
+        - Ambiguity
+        - I would prefer short and concise definitions if possibles
+    - Instructor initially refers to 'properties' as 'attributes'
+        e.g., "attribute color"
+        - Attributes are usually used to represent metadata in C++
+    
 ----------------------------------------------------------------------------------------
 
 Big O Cheat Sheet:  https://www.bigocheatsheet.com/
@@ -218,5 +228,84 @@ Big O Cheat Sheet
     - provides helpful charts and graphs to help visualize and understand Time Complexity
         for functions from all types of data structures
     - provides Time Complexity & Space Complexity chart for Array Sorting Algorithms
+
+*End of Section 3: Big O
+
+5/19/2026 ----------------------------------------------------------------------------------------
+
+*Section 4: Pointers & Classes
+
+19. Pointers
+
+Notable Behavior between Pointers and Normal Variables
+    - Pointers point to a memory addresss
+        - * (de-reference) is used to access to the stored value at the memory address
+        - pointers can also point to another memory address (pointer)
+    - Normal Variables only know about a stored value
+
+    Normal:
+        int num1 = 11;
+        int num2 = num1;
+        num1 = 22;
+        // psuedo code: print num1 & num2
+
+        output:
+            num1 prints 22
+            num2 prints 11
+
+    Pointers:
+        int* num1 = new int(11);
+        int* num2 = num1;
+        num1 = 22;
+        // psuedo code: print num1 & num2
+
+        output:
+            num1 prints 22
+            num2 prints 22
+
+    *num2 points to the memory address of num1 and de-referencing num2 will return the stored value 
+         at the memory address of num1
+
+----------------------------------------------------------------------------------------
+
+20. Classes
+
+Analogy:
+    cookie cutter to cut cookies into a specific shape
+
+Conventional Analogy:
+    Blueprint for building objects
+
+Video Example:
+    class Cookie {
+        private:
+            string color;
+
+        public:
+            Cookie (string color) {
+                this->color = color;
+            }
+            string getColor(){
+                return color;
+            }
+            void setColor(string color) {
+                this->color = color;
+            }
+    }
+
+    - 'this' keyword is refering to the 'Cookie' class
+    - 'this' is used to provide the correct context because the constructor has parameter 'color'
+        and Cookie also has internal property called, 'color'
+
+Calling the constructor() of a class:
+    Cookie* cookieOne = new Cookie("green");
+        Note: 'new' keyword allocates memory on the Heap and calls the constructor to initialize 
+                that memory
+
+*End of Section 4: Pointers & Classes
+
+----------------------------------------------------------------------------------------
+
+
 
 
