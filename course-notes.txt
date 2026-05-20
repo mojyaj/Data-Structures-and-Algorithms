@@ -2,14 +2,15 @@ C++ Data Structures & Algorithms + LEETCODE Exercises
 from Udemy
 
 Personal Thoughts on Course
-    - Instructor focus too much on visuals and visual cues to teach Big O and does not give me the
-        concise definitions for the various Big O notations
+    - Instructor focus too much on visuals to teach Big O and does not give me the
+        concise definitions or language for the various Big O notations
         - Over simplified
         - Ambiguity
         - I would prefer short and concise definitions if possibles
     - Instructor initially refers to 'properties' as 'attributes'
         e.g., "attribute color"
         - Attributes are usually used to represent metadata in C++
+    - Visuals were helpful for explaining Link List algorithms
     
 ----------------------------------------------------------------------------------------
 
@@ -304,6 +305,690 @@ Calling the constructor() of a class:
 
 *End of Section 4: Pointers & Classes
 
+----------------------------------------------------------------------------------------
+
+*Start of Section 5: 
+
+21. Linked List: Intro
+
+Talking Points
+    - Linked List properties
+    - Vectors allows direct and quick access to an 'index' in its data set
+    - 'Green Squares' represent Vectors/arrays
+    - 'Purple Circles' represent Nodes such as Linked Lists
+    - Contiguous and Non-Contiguous
+    - Each node should have a 'next' property pointing to the next node in the linked list
+
+Linked Lists & Terminology
+    Head - Stores memory address of the 'First' node in a list.
+            "Head points to the first node"
+    Tail - Stores memory address of the 'Last' node in a list.
+            Important: the 'Tail' node points to 'nullptr' and this is how we know 
+                        that a node is the 'Tail'
+    Non-Contiguous - Each node is not spatially organized next to each other in memory.
+                        This is different from vectors/arrays where the entire data set is contiguous.
+        
+----------------------------------------------------------------------------------------
+
+22. LL: Big O 
+
+Linked List Talking Points 
+    - Adding node to End 
+        - O(1)  Constant Time 
+        - this context: 'n' = last node 
+        - Process
+            1) Set the original node(n)->'next' to point to new 'node(n)'
+            2) Set 'Tail' to point to the new node(n) in the linked list 
+    - Removing nodes from End 
+        - O(n)  Linear Time 
+        - Process 
+            1) Remove last node by setting node(n-1)->'next' to 'nullptr'
+                - Now this is the last node(n)
+            2) Find the node(n-1) that points to the last node(n) in the linked list 
+                - Iterate through entire Linked List in order to find the node(n-1) that points to 
+                    the last node(n) in the list 
+            3) Reassign 'Tail'->'next' to 'node(n-1)'->'next'
+                - Now 'node(n-1)' and 'Tail' points to the very last node(n) in the linked list 
+
+    - Adding node to Front
+        - O(1)  Constant Time
+        - this context: 'i' = first node
+        - Process
+            1) Assign new first node(i)->'next' to 'Head' which points to original first node(i+1)
+    - Removing node from Front
+        - O(1)  Constant Time
+        - Process
+            1) Set 'Head->next' equal to 'node(i+1)'
+                - original node(i) is removed from the linked list
+                - now 'node(i+1)' becomes 'node(i)' of the linked list
+            
+    - Adding node to Middle
+        - O(n)  Linear Time
+        - clarity: add after node
+        - this context: 
+            - 'x' = target node to search (in the middle)
+            - 'y' = new node (node to be added)
+        - Process
+            1) Start at 'Head' and Iterate through the linked list to find node(x)
+            2) Set 'node(y)->next' point to 'node(x)->next'
+                - both 'node(y)' & 'node(x)' point to the same node
+            3) Set 'node(x)->next' point to 'node(y)->next'
+                - node(x) points to node(y)
+
+    - Searching a node by index
+        - O(n)
+        - Process 
+            1) Start at 'Head' node and Iterate through linked list while accumulating an index
+
+    - Searching a node by value
+        - O(n)
+        - Process
+            1) Iterate through each node and compare the stored value
+
+    - Vector/Array vs Linked List
+        - Vector is faster at
+            - Removing Last node  O(n)
+            - Searching by index  O(n)
+        - Linked List is faster at
+            - Prepending          O(n)
+            - Removing First node O(n)
+      
+----------------------------------------------------------------------------------------
+
+23. LL: Under the Hood
+
+Talking Points
+    - What is a node?
+        - A Value
+        - A Pointer
+        - Similar to an unordered map:
+            {
+                "value": 4,
+                "next": nullptr
+            }
+        - Structure:
+            "head": {
+                        "value": 4,
+                        "next": {
+                                    "value": 11,
+                                    "next": {
+                                                "value": 8,
+                                                "next": {
+                                                            "value": 1,
+                                                            "next": nullptr
+                                                        }
+                                            }
+                                }
+                    },
+            "tail: *point to last node
+        - Linked List is very similar to a set of unordered maps
+
+----------------------------------------------------------------------------------------
+
+24. LL: Constructor
+
+class LinkedList {
+
+private:
+    Node* head;
+    Node* tail;
+    int length;
+
+public:
+    LinkedList(int value){
+        Node* newNode = new Node(value);
+        head = newNode;
+        length = 1;
+    }
+
+    // constructor
+    LinkedList(int value) {...}     Create new Node
+
+    void append(int value) {...}    Create new Node & Add to End
+
+    void prepend(int vlue) {...}    Create new Node & Add to Beginning
+
+    bool insert(int index, int value) {...}     Create new Node & Insert Node
+}
+
+class Node {
+public:
+    int value;
+    Node* next;
+
+    Node(int value){
+        this->value = value;
+        next = nullptr;
+    }
+};
+
+Talking Points
+    - When LinkedList constructor is called, also create a 'Node' object
+        - Create new LinkedList,
+            LinkedList* myLinkedList = new LinkedList(4);
+    - Node contains 'value' and 'next' (pointer to a Node)
+        - Constructor
+            - sets value to argument
+            - sets 'next' to 'nullptr'
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+In Browser Coding Exercise
+Coding Exercise 1: LL:Constructor
+
+Passed all 4 tests
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702794#questions
+
+----------------------------------------------------------------------------------------
+
+26. LL: Print List
+
+Print value of each node in a linked list
+
+void printList() {
+    Node* temp = head;
+    while (temp) {
+        cout << temp->value << endl;    // print value of current 'Head'
+        temp = temp->next;              // Move 'Head' forward
+    }                                   // evaluate next 'temp' value in while loop
+}
+
+----------------------------------------------------------------------------------------
+
+27. LL: Destructor
+
+LinkedList class has a written Destructor
+    - LinkedList default Destructor will delete 'head' and 'tail' (stack objects)
+    - LinkedList class does not know how to delete all stored 'Nodes'
+        - Memory Leak if 'Nodes' are not deleted properly
+    - Process deletion of all 'Node' objects in ~LinkedList() Destructor
+        1) Create a temporary Node pointer and set to 'head'
+                Node* temp = head;
+        2) Iterate each node in the LinkedList while 'head' != nullptr
+        3) Set 'head' to 'head->next'
+            - Move the 'head' forward
+        4) delete 'temp'
+            - This deletes the 'Node' in the Heap
+        5) Reassign 'temp' = head;
+        6) Repeat from step 2
+            - Eventually, 'head' will be set to 'nullptr' and race us
+                out of the while loop
+             
+Node class has no written Destructor
+    - Default destructor will be called, when 'delete node' executes
+
+~LinkedList() {
+    Node* temp = head;
+    while(head){
+        head = head->next;
+        delete temp;
+        temp = head;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+28. LL: Append
+
+Instructions:
+    Complete Section 6 exercise 2: LL:Append
+
+- Adding node to End 
+    - O(1)  Constant Time 
+    - this context: 'n' = last node
+    - Process
+        1) Check if this LinkedList is empty
+            i) Set 'head' and 'tail' to new node(n)
+            ii) Increment 'length' by 1
+        2) Set the tail->'next' to point to new 'node(n)'
+        3) Set 'Tail' to point to the new node(n)
+        4) Increment 'length' by 1
+
+Code Analysis
+    - Near identical
+    - Instructor use if/else statements to handle empty and 
+        non-empty LinkedList
+    - I use single if statement to handle Empty Linked List
+        and return early. If non-empty, then implementation
+        is directly in the function body
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 2: LL:Append
+
+void append(int value) {
+            Node* newNode = new Node(value);
+            
+            // If Empty LinkedList
+            if (length == 0) {
+                head = newNode;
+                tail = newNode;
+                length = 1;
+                return;     // exit out of method
+            }
+            
+            tail->next = newNode;   // set previous 'node->next' to 'newNode'
+            tail = newNode;         // set 'tail' to 'newNode'
+            length++;               // update length
+}
+
+Passed all 3 tests
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5699812#questions
+
+----------------------------------------------------------------------------------------
+
+29. LL: Delete Last (Intro)
+
+Removing nodes from End 
+    - O(n)  Linear Time 
+    - Process 
+        1) Move 'tail' to the previous 'node(n-1)'
+        2) Call destructor, 'delete node', on the dettached 'node'
+            - Now the new last node points to 'nullptr'
+    - Support Edge Cases:
+        - 'head' & 'tail' point to 'nullptr'
+        - only one single node in the LinkedList
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 3: LL: Delete Last
+
+My code (Bad: Memory Leak):
+    void deleteLast(){
+        
+        if (length == 0) return;
+        if (length == 1) {          // Handle edge case 
+            head = nullptr;         // Memory Leak: did not delete the 'node'
+            tail = nullptr;
+            length--;
+            return;
+        }   
+        
+        Node* prevNode = head;
+        Node* tempNode = head;
+        
+        while (tempNode->next) {
+            prevNode = tempNode;
+            tempNode = tempNode->next;
+        }
+        
+        tail = prevNode;        // found the new last 'node'
+        tail->next = nullptr;   // detach the old 'node'
+        delete tempNode;        // delete the old 'node'
+        length--;               // decrement 'length'
+    }
+
+All 4 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702796#questions
+
+Instructors code:
+    void deleteLast() {
+                
+        if (length == 0) return;
+        
+        Node* prevNode = head;
+        Node* tempNode = head;
+        
+        while (tempNode->next) {
+            prevNode = tempNode;
+            tempNode = tempNode->next;
+        }
+        
+        tail = prevNode;        // found the new last 'node'
+        tail->next = nullptr;   // detach the old 'node'
+        length--;               // decrement 'length'   
+
+        // Handle edge case where 'deleteLast()' deletes the very last 
+        // node in the LinkedList
+        if (length == 0) {
+            head = nullptr;
+            tail = nullptr;
+        }     
+
+        delete tempNode;        // delete the old 'node'
+    }
+
+----------------------------------------------------------------------------------------
+
+30. LL: Delete Last (Code)
+
+Instructions from coding exercise 3 did not follow along with instructor explained in 
+    this video lecture. 
+
+----------------------------------------------------------------------------------------
+
+31. LL: Delete Last (Rewrite)
+
+void deleteLast() {
+    if (length == 0) return;
+    Node* temp = head;
+    if (length == 1) {     // Edge Case
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        Node* pre = head;
+        while(temp->next) {
+            pre = temp;
+            temp = temp->next;
+        }
+        tail = pre;
+        tail->next = nullptr;
+    }
+    delete temp;
+    length--;            
+}
+
+----------------------------------------------------------------------------------------
+
+32. LL: Prepend
+
+O(1) Constant Time
+
+Default Process
+    1) create 'newNode' with existing nodes
+    2) newNode->next = 'head'
+    3) head = newNode
+    4) increment 'length'
+
+Edge Case: Prepend to empty LinkedList
+        length == 0
+    1) create 'newNode'
+    2) head and tail both point to 'newNode'
+    3) increment 'length'
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 4: LL: Prepend
+
+void prepend(int value) {
+            
+    Node* newNode = new Node(value);
+    
+    if (length == 0) {
+        head = newNode;
+        tail = newNode;
+        length++;
+        return;
+    }
+    
+    newNode->next = head;
+    head = newNode;
+    length++;
+}
+
+All 3 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702798#questions
+
+----------------------------------------------------------------------------------------
+
+33. LL: Delete First
+
+Process
+    1) Move 'head' forward
+    2) Delete 'node' behind 'head'
+    3) Decrement length
+
+Edge Case: Single node inside of LinkedList
+
+Edge Case: Empty LinkedList
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 5: LL: Delete First
+
+void deleteFirst() {
+            
+    if (length == 0) return;
+    
+    Node* tempNode = head;
+    
+    if (length == 1) {
+        head = nullptr;
+        tail = nullptr;
+    } else {
+        head = head->next;
+    }
+    
+    delete tempNode;
+    length--;
+    
+}
+
+All 3 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702800#questions
+
+----------------------------------------------------------------------------------------
+
+34. LL: Get
+
+Get a particular node at an index
+
+Process
+    1) Create a temp variable to track how many times we called next
+
+Edge Cases: 
+    1) cannot process index less than 0
+    2) cannot process index greater than length
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 6: LL: Get
+
+Node* get(int index) {
+            
+    if (index < 0 || index >= length) return nullptr;
+    
+    Node* tempNode = head;
+    
+    for (int i = 0; i < index; i++){
+        
+        tempNode = tempNode->next;
+    }
+    
+    return tempNode;
+}
+
+All 6 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702802#questions
+
+----------------------------------------------------------------------------------------
+
+35. LL:Set
+
+Change the value of a Node at an index
+return a boolean if successful
+
+Process
+    1) call 'get()'
+    2) test if get() returns 'nullptr' or 'Node'
+    3) set the value of 'Node'
+
+Edge Cases: Cannot set value when index is out of bounds
+    1) index > length
+    2) index < 0
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 7: LL: Set
+
+bool set(int index, int value) {
+            
+    Node* tempNode = get(index);
+    
+    if (tempNode == nullptr) return false;
+    
+    tempNode->value = value;
+    
+    return true;
+}
+
+All 5 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702804#questions
+
+----------------------------------------------------------------------------------------
+
+36. LL: Insert
+
+Insert a new Node with a specified value at a particular index
+
+Process
+    1) create the 'newNode' and pass in specified value
+    2) call get to return the node at index
+    3) 
+
+Edge Case: Index Cannot be out of bounds
+    1) index < 0
+    2) index > length  
+Edge Case: Insert at index 0
+    1) call prepend()
+    2) return true
+Edge Case: Insert at last index
+    1) call append()
+    2) return true
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 8: LL: Insert
+
+bool insert(int index, int value) {
+            
+    if (index < 0 || index > length) return false;
+    
+    if (index == 0) {       // Edge Case
+        prepend(value);
+        return true;
+    }
+    if (index == length) {  // Edge Case
+        append(value);
+        return true;
+    }
+    
+    Node* newNode = new Node(value);
+    Node* temp = get(index - 1);    // get the Node behind 'index' so that we can set its 'next' property
+                                    //  to point to the 'newNode'
+    newNode->next = temp->next;
+    temp->next = newNode;
+    length++;
+    
+    return true;
+}
+
+All 6 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702806#questions
+
+----------------------------------------------------------------------------------------
+
+37. LL: Delete Node
+
+Delete a node at a particular index
+ Use 'get()' to return a 'Node*'
+
+Process: Delete a node in the middle
+    1) 'temp' Node to store node that will be deleted
+    2) 'prevNode' to store node behind 'temp' Node
+    3) Set 'prevNode->next' = 'temp->next'
+    4) delete 'temp'
+    5) decrement length
+
+Edge Case: Index cannot be out of bounds
+    1) index < 0
+    2) index >= length
+
+Edge Case: Index == 0
+    1) return deleteFirst()
+
+Edge Case: Index == length - 1
+    1) return deleteLast()
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 9: LL: Delete Node
+
+void deleteNode(int index) {
+            
+    if (index < 0 || index >= length) return;
+    if (index == 0) {
+        deleteFirst();
+        return;
+    }
+    if (index == length) {
+        deleteLast();
+        return;
+    }
+    
+    Node* prevNode = get(index - 1);        
+    Node* temp = prevNode->next;    // Don't call get() twice | expensive
+    
+    prevNode->next = temp->next;
+    delete temp;                    // Delete the node at 'index'
+    length--;
+}
+
+All 6 tests Passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/5702808#questions
+
+----------------------------------------------------------------------------------------
+
+37. LL: Reverse
+
+One of the most complicated functions
+Often an Interview topic
+
+Process
+    1) Create 'temp' Node*
+        - used to help swap around nodes
+    2) reverse 'head' & 'tail' 
+    3) For each Node, set 'next' to point to the Node behind it
+
+---
+
+*Section 6: <> LL: Coding Exercises
+
+Coding Exercise 10: LL: Reverse
+
+void reverse() {
+            
+    if (length == 1) return;    // Handle Edge Case
+    
+    Node* temp = head;
+    head = tail;
+    tail = temp;
+    
+    Node* after = nullptr;
+    Node* before = nullptr;
+    
+    // Iterate through the list using 'temp', while 'before' trails behind and becomes the reversed 
+    //  portion, and 'after keeps track of the next node.
+    for (int i = 0; i < length; i++) {
+        after = temp->next;     // Cache: Store next node for next iteration
+        temp->next = before;    // Reverse: Point the 'next' node to the 'before' node
+        before = temp;          // Advance: Move 'before' forward | it now represents the head of the reversed portion.
+        temp = after;           // Advance: Move 'temp' to the next node we cached earlier.        
+    }
+}
+
+All 5 tests Passed
+source: https://www.udemy.com/course/cpp-deep-dive/learn/lecture/10327968#overview
+
+*End of Section 5: Linked Lists
+*End of Section 6: <> LL: Coding Exercises
 ----------------------------------------------------------------------------------------
 
 
