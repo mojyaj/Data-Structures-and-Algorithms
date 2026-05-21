@@ -1055,7 +1055,51 @@ Node* findMiddleNode() {
 }
 
 All 4 tests Passed
-*See results in '/src-39-LL-Midddle-Node/Test.cpp'
+*See results in 'Section-7-Interview-LeetCode/src-39-LL-Midddle-Node/Test.cpp'
 
 ----------------------------------------------------------------------------------------
+
+40. LL: Has loop
+
+Check if a Linked List has a loop.
+    - Clarity: When a 'node' points to a 'previous node' in the Linked List
+    - Utilize 'Tortoise and Hare algorithm' because eventually 'slow' and 'fast' will be equal
+
+If a Linked List contains a loop, it indicates a flaw in its implementation
+
+Floyd's cycle-finding algorithm (also known as the "tortoise and the hare" algorithm) 
+    This algorithm uses two pointers: a slow pointer and a fast pointer. The slow pointer 
+    moves one step at a time, while the fast pointer moves two steps at a time. If there 
+    is a loop in the linked list, the two pointers will eventually meet at some point. 
+    If there is no loop, the fast pointer will reach the end of the list.
+
+---
+
+Coding Exercise 12: LL: Has Loop ( ** Interview Question)
+
+bool hasLoop() {
+            
+    Node* slow = head;
+    Node* fast = head;
+    
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        
+        if (slow == fast) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+All 9 tests Passed
+See results in 'Section-7-Interview-LeetCode/src-40-Has-Loop/Test.cpp'
+
+----------------------------------------------------------------------------------------
+
+
+
+
 
