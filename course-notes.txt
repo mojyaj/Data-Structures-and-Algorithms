@@ -10,8 +10,10 @@ Personal Thoughts on Course
     - Instructor initially refers to 'properties' as 'attributes'
         e.g., "attribute color"
         - Attributes are usually used to represent metadata in C++
+        - instructor refers to 'properties' as 'attributes' again in Section 7 video
+            lecture 39: LL Find Middle, "length attribute"
     - Visuals were helpful for explaining Link List algorithms
-    
+
 ----------------------------------------------------------------------------------------
 
 Big O Cheat Sheet:  https://www.bigocheatsheet.com/
@@ -991,6 +993,67 @@ source: https://www.udemy.com/course/cpp-deep-dive/learn/lecture/10327968#overvi
 *End of Section 6: <> LL: Coding Exercises
 ----------------------------------------------------------------------------------------
 
+*Section 7: <> LL: Interview/Leetcode Exercises
+
+39. LL: Find Middle Node
+
+Goal:
+    Return the node in the middle of a Linked List.
+
+Constraints:
+    There is no 'length' property
+    Not allowed to calculate the length of the list
+    can only iterate through the list 1 time
+
+Strategy to solve this
+    2 pointers
+        1) 'slow'
+        2) 'fast'
+        * set both = 'head'
+    Process
+        1) Advance 'fast' forward by 2 nodes
+        2) Advance 'slow' forward by 1 node
+        3) When 'fast' is at the last node in the linked list,
+            return 'slow'
+            - 'slow' is the middle node
+    
+    *Scenario:  What if there are an even number of nodes??
+                Return the first node in the second-half of the linked list
+                LL: [1], [2], [3], [4] 
+                               ^        ^
+                            'slow'    'fast' (nullptr)    
+                    node[3] is middle node
+
+Intuition:
+    1/2 ratio  is a  half point,  AKA  middle node
+    1/2 == middle
+
+---
+
+Coding Exercise 11: LL: Find Middle Node ( ** Interview Question)
+
+Implement a member function, findMiddleNode(), which finds and returns the middle node of the linked list.
+    Note: this LinkedList implementation does not have a length member variable.
+
+Node* findMiddleNode() {
+    
+    if (!head) return nullptr;
+    
+    Node* slow = head;
+    Node* fast = head;
+    
+    while (fast->next) {
+        slow = slow->next;  // advance by 1
+        fast = slow->next;  // advance by 2
+    }
+    
+    return slow;
+}
+
+All 4 tests Passed
+*See results in '/src-39-LL-Midddle-Node/Test.cpp'
+
+----------------------------------------------------------------------------------------
 
 
 
