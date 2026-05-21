@@ -1,7 +1,10 @@
 #include <iostream>
+#include <string>
 #include "LinkedList.cpp"
 
 using namespace std;
+using std::to_string;
+
 
 /*  Test Results:
 

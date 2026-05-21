@@ -85,9 +85,9 @@ class LinkedList {
             Node* slow = head;
             Node* fast = head;
             
-            while (fast->next) {
-                slow = slow->next;  // advance by 1
-                fast = slow->next;  // advance by 2
+            while (fast && fast->next) {
+                slow = slow->next;        // advance by 1
+                fast = fast->next->next;  // advance by 2
             }
             
             return slow;
