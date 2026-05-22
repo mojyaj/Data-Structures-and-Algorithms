@@ -1097,7 +1097,7 @@ bool hasLoop() {
 All 9 tests Passed
 See results in 'Section-7-Interview-LeetCode/src-40-Has-Loop/Test.cpp'
 
-----------------------------------------------------------------------------------------
+5/21/2026 ----------------------------------------------------------------------------------------
 
 41. LL: Find Kth Node from End
 
@@ -1116,10 +1116,17 @@ Clarity on constraints:
 
 hint: use 'slow' and 'fast' pointers
 
-After figuring out the algorithm,
+After figuring out my algorithm,
     things to be more careful of:
         - logical operators <= and >=
-        - 
+        - computation breaks for Linked Lists with an
+            even number of nodes
+            - x = (m + k) + m
+
+Time Complexity: O(n)
+
+**Coding Exercise in Udemy did not test Linked Lists with an even
+    number of nodes
 
 Node* findKthFromEnd(int k) {
     
@@ -1172,31 +1179,32 @@ Brainstorming a Solution:
             (m - k) + m
     start another while loop and iterate 'i' number of times
     return that i-th node (Kth node)
-
-                        K
-    1->2->3->4->5->6->7->8->9->10->11
+    
+    Length: 11 | Middle: 6
+                                    K
+    1->2->3->4->5->6->7->8->9->10->11   K=1 | I = 11 = (6-1) + 6
     sf
-                        K
-    1->2->3->4->5->6->7->8->9->10->11
+                                K
+    1->2->3->4->5->6->7->8->9->10->11   K=2 | I = 10 = (6-2) + 6
         s  f
-                        K
-    1->2->3->4->5->6->7->8->9->10->11      
+                            K
+    1->2->3->4->5->6->7->8->9->10->11   K=3 | I = 9 = (6-3) + 6   
         s     f
-                        K
-    1->2->3->4->5->6->7->8->9->10->11      
+                            K
+    1->2->3->4->5->6->7->8->9->10->11   K=4 | I = 8 = (6-4) + 6      
             s        f
-                        K
-    1->2->3->4->5->6->7->8->9->10->11
+       K
+    1->2->3->4->5->6->7->8->9->10->11   K=10 (6-6) + 6 = 6
                 s           f
-                        K
-    1->2->3->4->5->6->7->8->9->10->11      K=11 (6-11) + 6 = 0
-                    s                f
+    K
+    1->2->3->4->5->6->7->8->9->10->11   K=11 (6-11) + 6 = 1
+                    s              f
                 
 BEST algorithm:
     1) Advance 'fast' k number of times
         - if 'fast' == nullptr  -> OUT OF BOUNDS
         - return nullptr
-    2) advance 'slow' and 'fast' and stop when 'fast' == nullptr
+    2) Advance 'slow' and 'fast' by 1 each and ONLY stop when 'fast' == nullptr
         - 'slow' will have arrived at Kth node
         - return 'slow'
 
@@ -1218,7 +1226,173 @@ BEST algorithm:
         return slow;
     }
 
+5/22/2026 ----------------------------------------------------------------------------------------
 
+42. LL: Remove Duplicates
 
+What is a Set?
+    A data structure that stores unique values.
+    Automatically prevents duplicate values.
+    No Indexes
+    Tree-Based data structure
 
+Sets in C++
+    #include <set>
+    std::set
+        - stores unique values
+        - automatically sorts elements
+        - provides fast lookup, insertion, and deletion
+    Common methods/operations
+        Insert
+        Delete 
+        Find
+
+Talking Points
+    - 'set' was not mentioned in earlier lectures
+        - I compiled properties and behaviors of 'sets'
+    - Instructor provides logic for 'hasDuplicate()' algorithm
+        - 2 algorithms
+            1) Efficient - use 'set' data structure
+                - O(n) Linear Time Complexity
+            2) Inefficient - use 'nested loops'
+                - O(n²) Quadratic Time Complexity
+    - Instructor provides logic with nested loops
+        - 2 pointers
+            1) 'current'
+            2) 'runner'
+        - Process:
+            1) Outer Loop: 'current' will remain at a fixed node until Inner Loop breaks
+                - Advance 'current' by 1 if Inner Loop breaks
+                    - continue another Inner Loop in step 2
+            2) Inner Loop: Advance 'runner' by 1
+                - compare 'current->next' and 'runner'
+                    - if 'current' == 'runner->next', then 
+                        i) Set 'runner' = 'runner->next->next'
+                - if 'runner' == nullptr, then break out of inner loop 
+                - else, continue/repeat step 2
+            3) Advance 'current' by 1 and repeat step 2 until 'current' == 'tail'
+        - Critical
+            - comparison is between 'current' value and the 'value of the next node',
+                NOT 'runner' value
+            - 'runner' is only used to traverse and swap nodes and NOT for comparison
+    - Solution using 'set' data structure is provided by instructor as well
+
+---
+
+Coding Exercise 14: LL: Remove Duplicates (**Interview Question)
+
+My Algorithm:
+    - Big O(n²)
+    - My Algorithm(1) vs Instructor Algorithm(2) (both use Nest Loop)
+        - (2) is faster, safer, and more efficient
+        - (1) repeats comparisons and has index logic that increases
+            overhead without reducint time complexity
+    - After Thoughts: Best to use 'while' loop
+        - reduce code complexity
+            - good example, 
+                while (current != nullptr)
+        - removes unnecessary index logic
+        - Test Notes:
+           I had to add more nodes in the linked list because when 
+           there are 3 or more duplicate nodes, there would be 
+           multiple duplicates nodes remaining in the linked list.
+           Fix: Use index logic such as, j = (j == i) ? j+1 : j;
+           *This could be avoided if I used a while loop instead 
+             such as, while (current != nullptr)
+
+    Terminal Command:
+        Compile & Test
+            - g++ Test.cpp -o Test.exe && ./Test.exe
+
+    void removeDuplicates() {
+
+        if (length <= 1) return;
+        
+        Node* current = head;
+        Node* runner = head;
+        
+        for (int i = 1; i <= length-1; i++) {
+            
+            for (int j = i; j <= length-1; j++) {
+                if (current->value == runner->next->value){
+                    Node* temp = runner->next;          // prep Node to be deleted
+                    runner->next = runner->next->next;  // swap duplicate node out
+                    delete temp;                        // delete duplicate node
+                    j = (j == i) ? j-1 : j;             // compensate j index for position change
+                    length--;                           // decrement length
+                } else {
+                    runner = runner->next;
+                }
+            }
+
+            current = current->next;
+            runner = current;
+        }
+    }
+
+*******
+
+Instructor's solution with Nest Loops:
+
+    void removeDuplicates() {
+        Node* current = head;
+        while (current != nullptr) {
+            Node* runner = current;
+            while (runner->next != nullptr) {
+                if (runner->next->value == current->value) {
+                    Node* temp = runner->next;
+                    runner->next = runner->next->next;
+                    delete temp;
+                    length -= 1;
+                } else {
+                    runner = runner->next;
+                }
+            }
+            current = current->next;
+        }
+    }
+
+*******
+
+Public Algorithm (with 'set' structure):
+
+    void removeDuplicates() {
+        unordered_set<int> values; // Stores unique list values
+        Node* previous = nullptr; // Points to previous node
+        Node* current = head; // Starts at head of list
     
+        // Traverse list until end (nullptr)
+        while (current != nullptr) {
+            
+            // If value exists in set
+            if (values.find(current->value) != values.end()) {
+                
+                // Bypass current node
+                previous->next = current->next;
+                
+                // Delete current node
+                delete current;
+                
+                // Move to next node
+                current = previous->next;
+                
+                // Decrement list length
+                length -= 1;
+            } else {
+                // Insert value in set
+                values.insert(current->value);
+                
+                // Update previous to current node
+                previous = current;
+                
+                // Move to next node
+                current = current->next;
+            }
+        }
+    }
+
+----------------------------------------------------------------------------------------
+
+
+
+
