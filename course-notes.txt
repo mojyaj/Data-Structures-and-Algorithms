@@ -1099,7 +1099,126 @@ See results in 'Section-7-Interview-LeetCode/src-40-Has-Loop/Test.cpp'
 
 ----------------------------------------------------------------------------------------
 
+41. LL: Find Kth Node from End
+
+Find the k-th node from the end of the linked list
+
+Constraints:
+    - No 'length' property
+    - cannot calculate length
+
+Clarity on constraints:
+    - You cannot compute the length first
+    - You cannot traverse the list twice
+    - You cannot store nodes in an array or vector
+    - You cannot use recursion to count nodes
+    - You cannot use an integer to represent “how many nodes are in the list”
+
+hint: use 'slow' and 'fast' pointers
+
+After figuring out the algorithm,
+    things to be more careful of:
+        - logical operators <= and >=
+        - 
+
+Node* findKthFromEnd(int k) {
+    
+    Node* slow = head;
+    Node* fast = head;
+    int i = 1;
+    
+    // check if list is empty
+    if (!head || !tail) return nullptr;
+    
+    //Check if k is out of range
+    while (i < k) {
+        fast = fast->next;
+        //std::cout << fast << std::endl;
+        if (!fast) return nullptr;
+        i++;
+    }
+    
+    i = 0;
+    fast = head;
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        i++;
+    }
+
+    int m = i + 1; // middle index
+    int x = (m - k) + m;
+    
+    slow = head;
+    i = 1;
+    while (slow) {
+        if (i == x || x == 1) return slow;
+        i++;
+        slow = slow->next;
+    }
+}
+
+Brainstorming a Solution:
+    11 items in Linked List
+    K = 11
+    iterations to exit while loop: 5
+    slow is at 6th node (middle node)
+
+    which half of list is K in?
+        K=11, is greater than 6 so,
+        K is in first half ('head' side)
+
+    find K: (6-11) + 6 = -1
+            (m - k) + m
+    start another while loop and iterate 'i' number of times
+    return that i-th node (Kth node)
+
+                        K
+    1->2->3->4->5->6->7->8->9->10->11
+    sf
+                        K
+    1->2->3->4->5->6->7->8->9->10->11
+        s  f
+                        K
+    1->2->3->4->5->6->7->8->9->10->11      
+        s     f
+                        K
+    1->2->3->4->5->6->7->8->9->10->11      
+            s        f
+                        K
+    1->2->3->4->5->6->7->8->9->10->11
+                s           f
+                        K
+    1->2->3->4->5->6->7->8->9->10->11      K=11 (6-11) + 6 = 0
+                    s                f
+                
+BEST algorithm:
+    1) Advance 'fast' k number of times
+        - if 'fast' == nullptr  -> OUT OF BOUNDS
+        - return nullptr
+    2) advance 'slow' and 'fast' and stop when 'fast' == nullptr
+        - 'slow' will have arrived at Kth node
+        - return 'slow'
+
+    Node* findKthFromEnd(int k) {
+        Node* slow = head;
+        Node* fast = head;
+
+        for (int i = 0; i < k; ++i) {
+            if (fast == nullptr) {
+                return nullptr;
+            }
+            fast = fast->next;
+        }
+
+        while (fast != nullptr) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
+    }
 
 
 
 
+    

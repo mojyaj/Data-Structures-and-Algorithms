@@ -3,6 +3,28 @@
 
 using namespace std;
 
+/*  Test Results
+    ------ LinkedList Test: EmptyListHasLoop ------
+    empty
+    Has loop: False
+    PASS
+    ------ LinkedList Test: SingleElementNoLoop ------
+    1
+    Has loop: False
+    PASS
+    ------ LinkedList Test: MultipleElementsNoLoop ------
+    1 -> 2 -> 3 -> 4
+    Has loop: False
+    PASS
+    ------ LinkedList Test: SingleElementWithLoop ------
+    Has loop: True
+    PASS
+    ------ LinkedList Test: MultipleElementsWithLoop ------
+    Has loop: True
+    PASS
+
+*/
+
 static void test() {
     // Function to convert boolean to string for easy comparison
     auto boolToStr = [](bool val) -> string {
