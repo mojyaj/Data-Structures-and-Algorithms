@@ -6,9 +6,23 @@ using namespace std;
 using std::to_string;
 
 /* Test Results
-
+    ------ Test: RemoveDuplicatesEmptyList ------
+    BEFORE:    empty
+    AFTER:     empty
+    PASS
+    ------ Test: RemoveDuplicatesSingleElement ------
+    BEFORE:    1
+    AFTER:     1
+    PASS
+    ------ Test: RemoveDuplicatesNoDuplicates ------
+    BEFORE:    1 -> 2 -> 3
+    AFTER:     1 -> 2 -> 3
+    PASS
+    ------ Test: RemoveDuplicatesHasDuplicates ------
+    BEFORE:    1 -> 2 -> 2 -> 3
+    AFTER:     1 -> 2 -> 3
+    PASS
 */
-
 
 static void test() {
     // Helper function for pass/fail

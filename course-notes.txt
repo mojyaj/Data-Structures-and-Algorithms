@@ -1315,7 +1315,7 @@ My Algorithm:
             
             for (int j = i; j <= length-1; j++) {
                 if (current->value == runner->next->value){
-                    Node* temp = runner->next;          // prep Node to be deleted
+                    Node* temp = runner->next;          // cache Node to be deleted
                     runner->next = runner->next->next;  // swap duplicate node out
                     delete temp;                        // delete duplicate node
                     j = (j == i) ? j-1 : j;             // compensate j index for position change
@@ -1393,6 +1393,78 @@ Public Algorithm (with 'set' structure):
 
 ----------------------------------------------------------------------------------------
 
+43. LL: Binary to Decimal
+
+Visualize each node as a Binary value (0/1)
+
+    (1)->  (2)->  (3)->  (4)->
+    1000    100    10     1
+    *Add all node values:  1111
+
+    (1)->  (2)->  (3)->  (4)->
+    1000    0    10     1
+    *Add all node values:  1011
+
+    (1)->  (2)->  (3)->  (4)->
+     8      4      2      1
+     *Add to get decimal value:  15
+
+Details
+    - Each position of a binary number corresponds to a specific 
+        power of 2, starting from the rightmost digit.
+
+Constraints
+    - No length property
+    - Cannot iterate and calculate length
+
+Tips                                            
+    - Use a single pointer: 'current'                
+    - Initialize an integer 'num' to 0               
+    - Loop through the list                          
+    - Use the formula: num = num * 2 + current->value
+    - Return 'num' as the decimal value       
+
+My Algorithm (1) and Instructor's (2):
+    - Almost identical
+    - I included the line:
+        if (!head) return 0;
+      and left it there because I thought I needed it while 
+      I was working on the loop condition for the while loop.
+        - currently removed
+
+My Algorithm:
+
+    int binaryToDecimal() {
+
+        // No 'length' property
+        //if (!head) return 0;
+
+        Node* current = head;
+        int num = 0;
+
+        while(current) {
+            num = num * 2 + current->value;
+            current = current->next;
+        }
+        
+        return num;
+    }
+
+Instructor's Algorithm:
+
+    int binaryToDecimal() {
+        int num = 0;
+        Node* current = head;
+        while (current != nullptr) {
+            num = num * 2 + current->value;
+            current = current->next;
+        }
+        return num;
+    }
+
+--- 
+
+Coding Exercise 15: LL: Binary to Decimal ( ** Interview Question)
 
 
 
