@@ -1431,6 +1431,9 @@ My Algorithm (1) and Instructor's (2):
       and left it there because I thought I needed it while 
       I was working on the loop condition for the while loop.
         - currently removed
+--- 
+
+Coding Exercise 15: LL: Binary to Decimal ( ** Interview Question)
 
 My Algorithm:
 
@@ -1462,9 +1465,154 @@ Instructor's Algorithm:
         return num;
     }
 
---- 
+5/23/2026 ----------------------------------------------------------------------------------------
 
-Coding Exercise 15: LL: Binary to Decimal ( ** Interview Question)
+44. LL: Partition List
+
+Goal:
+    Rearrange a linked list so that 'all nodes' with values less than 
+        a 'target' value 'x' come before nodes greater than or equal 
+        to 'x', while preserving the original relative order.
+
+Exception: we won't reassign 'tail' ???? Okay
+
+Process:
+    - Declare 2 dummy Nodes
+        1) 'dummy1'
+        2) 'dummy2'
+    - Declare 3 pointers
+        1) 'prev1'
+        2) 'prev2'
+        3) 'current'
+    1) Set 'prev1' = 'dummy1' and
+        Set 'prev2 = 'dummy2'
+    1) Iterate through the Linked List and compare 'current->value' and 
+        target 'x->value'
+        i)  if 'node->value' < 'x', then set 'dummy1' = 'current->value'
+                - Advance 'prev1' forward by 1
+        ii) if 'node->value' >= 'x', then set 'dummy2' = 'current->value'
+                - Advance 'prev2' forward by 1
+        ii) repeat until current->next == nullptr
+    2) Once all nodes have been partitioned, re-combine both node chains
+        so that 'dummy1' is behind 'dummy2'
+
+---
+
+Coding Exercise 16: LL: Partition List ( ** Interview Question)
+
+My 2 Algorithms and Post Analysis
+    - Both will pass all tests and are not very different at all
+    - Both could have minor inefficiencies
+        - Dummy and pointer nodes are created on the heap
+        - Memory management
+    - Instructor's algorithm
+        - everything is done on the stack
+        - no memory management
+        - short & clean
+
+    1)  void partitionList(int x) { 
+
+            if (length <= 1) return; 
+
+            Node* dummy1 = new Node(0); 
+            Node* dummy2 = new Node(0); 
+            Node* prev1 = new Node(0);
+            Node* prev2 = new Node(0);
+            Node* current = head; 
+
+            prev1->next = dummy1; 
+            prev2->next = dummy2; 
+
+            while(current != nullptr) {
+
+                if (current->value < x) {
+                    prev1->next->next = current; // set dummy1-next
+                    prev1->next = current;       // set prev1->next
+                } else {
+                    prev2->next->next = current; 
+                    prev2->next = current; 
+                }
+                current = current->next; 
+            }
+
+            prev2->next->next = nullptr;
+            prev1->next->next = dummy2->next;
+            head = dummy1->next;
+
+            dummy1 = nullptr;
+            dummy2 = nullptr;
+            prev1 = nullptr;
+            prev2 = nullptr;
+            delete dummy1;
+            delete dummy2;
+            delete prev1;
+            delete prev2;
+        }
+
+    2)  void partitionList(int x) { 
+
+            if (length <= 1) return; 
+
+            Node* dummy1 = new Node(0); 
+            Node* dummy2 = new Node(0); 
+            Node* prev1 = dummy1;
+            Node* prev2 = dummy2;
+            Node* current = head; 
+
+            while(current != nullptr) {
+
+                if (current->value < x) {
+                    prev1->next = current; // set dummy1-next
+                    prev1 = current;       // set prev1
+                } else {
+                    prev2->next= current; 
+                    prev2 = current; 
+                }
+                current = current->next; 
+            }
+
+            prev2->next = nullptr;
+            prev1->next = dummy2->next;
+            head =dummy1->next;
+
+            dummy1 = nullptr;
+            dummy2 = nullptr;
+            prev1 = nullptr;
+            prev2 = nullptr;
+            delete dummy1;
+            delete dummy2;
+            delete prev1;
+            delete prev2;
+        }
+
+Instructor's Algorithm
+
+    3)  void partitionList(int x) {
+            if (head == nullptr) return;
+ 
+            Node dummy1(0);
+            Node dummy2(0);
+            Node* prev1 = &dummy1;
+            Node* prev2 = &dummy2;
+            Node* current = head;
+ 
+            while (current != nullptr) {
+                if (current->value < x) {
+                    prev1->next = current;
+                    prev1 = current;
+                } else {
+                    prev2->next = current;
+                    prev2 = current;
+                }
+                current = current->next;
+            }
+ 
+            prev2->next = nullptr;
+            prev1->next = dummy2.next;
+            head = dummy1.next;
+        }
+
+----------------------------------------------------------------------------------------
 
 
 

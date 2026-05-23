@@ -7,7 +7,27 @@ using std::to_string;
 
 /* Test Results
 
-
+    ------ Test: BinaryToDecimalEmptyList ------
+    BINARY:    empty
+    DECIMAL:   0
+    PASS
+    ------ Test: BinaryToDecimalSingleElement ------
+    BINARY:    1
+    DECIMAL:   1
+    PASS
+    ------ Test: BinaryToDecimalMultipleElements ------
+    BINARY:    1 -> 0 -> 1 -> 1
+    DECIMAL:   11
+    PASS
+    ------ Test: BinaryToDecimalAllZeros ------
+    BINARY:    0 -> 0 -> 0 -> 0
+    DECIMAL:   0
+    PASS
+    ------ Test: BinaryToDecimalAllOnes ------
+    BINARY:    1 -> 1 -> 1 -> 1
+    DECIMAL:   15
+    PASS
+    
 */
 
 static void test() {
