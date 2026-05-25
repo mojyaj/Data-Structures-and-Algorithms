@@ -23,7 +23,7 @@ class LinkedList {
             head = newNode;
             length = 1;
         }
-
+    
         ~LinkedList() {
             Node* temp = head;
             while (head) {
@@ -32,7 +32,7 @@ class LinkedList {
                 temp = head;
             }
         }
-
+    
         void printList() {
             Node* temp = head;
             if (temp == nullptr) {
@@ -66,7 +66,7 @@ class LinkedList {
             }
             length = 0;
         }
-
+    
         void append(int value) {
             Node* newNode = new Node(value);
             if (head == nullptr) {
@@ -80,86 +80,85 @@ class LinkedList {
             }
             length++;
         }
-
+    
+        void deleteFirst() {
+            if (length == 0) return;
+            Node* temp = head;
+            if (length == 1) {
+                head = nullptr;
+            } else {
+                head = head->next;
+            }
+            delete temp;
+            length--;
+        }
+    
         /*********************************************************************/
-        void partitionList(int x) { 
+        
+        void reverseBetween(int m, int n) {
 
-            if (length <= 1) return; 
+            if (length <= 1) return;
+            if (m == n) return;
 
-            Node* dummy1 = new Node(0); 
-            Node* dummy2 = new Node(0); 
-            Node* prev1 = dummy1;
-            Node* prev2 = dummy2;
-            Node* current = head; 
+            Node* dummy = new Node(0);
+            dummy->next = head;
 
-            while(current != nullptr) {
+            Node* prev = head;
+            Node* current = nullptr;
+            
+            if (m == 0) { 
+                prev = dummy; 
+            } 
+            
+            // find m-th node
+            int i = 0; 
+            for (; i < m - 1; i++) { 
+                prev = prev->next; 
+            } 
 
-                if (current->value < x) {
-                    prev1->next = current; // set dummy1-next
-                    prev1 = current;       // set prev1
-                } else {
-                    prev2->next= current;
-                    prev2 = current; 
-                }
-                current = current->next; 
-            }
+            current = prev->next; 
 
-            prev2->next = nullptr;
-            prev1->next = dummy2->next;
-            head = dummy1->next;
+            // How many iterations to reach 'n'? 
+            int j = n - m; 
+            int k = j; 
 
-            delete dummy1;
-            delete dummy2;
-            delete prev1;
-            delete prev2;
-            dummy1 = nullptr;
-            dummy2 = nullptr;
-            prev1 = nullptr;
-            prev2 = nullptr;
-        }
+            while (k > 0) {
+                Node* tomove = current->next; 
+                if (k == j) { 
+                    current->next = tomove->next; 
+                    tomove->next = current;
+                    prev->next = tomove; 
+                } 
+                else { 
+                    // Post-Review: These 3 lines below are all that are needed for this loop
+                    // the extra code in above if block can be deleted
+                    current->next = tomove->next; 
+                    tomove->next = prev->next; 
+                    prev->next = tomove; 
+                } 
+                k--; 
+            } 
 
-        /*** Efficient & Clean partitionList() ***/
-       
-        void partitionList2(int x) {
-            if (head == nullptr) return;
- 
-            Node dummy1(0);
-            Node dummy2(0);
-            Node* prev1 = &dummy1;
-            Node* prev2 = &dummy2;
-            Node* current = head;
- 
-            while (current != nullptr) {
-                if (current->value < x) {
-                    prev1->next = current;
-                    prev1 = current;
-                } else {
-                    prev2->next = current;
-                    prev2 = current;
-                }
-                current = current->next;
-            }
- 
-            prev2->next = nullptr;
-            prev1->next = dummy2.next;
-            head = dummy1.next;
-        }
+            if (m==0) head = prev->next;
+
+            delete dummy;
+        } 
 
         //   +======================================================+
         //   |                 WRITE YOUR CODE HERE                 |
         //   | Description:                                         |
-        //   | - Partition list around value x                      |
+        //   | - Reverse nodes between positions m and n            |
         //   | - Return type: void                                  |
         //   |                                                      |
         //   | Tips:                                                |
-        //   | - Create two dummy nodes for two new lists           |
-        //   | - One list for nodes less than x                     |
-        //   | - Another list for nodes greater or equal to x       |
-        //   | - Loop through original list                         |
-        //   | - Assign nodes to new lists based on value           |
-        //   | - Merge the two new lists                            |
-        //   | - Update the original list's head                    |
+        //   | - Create a dummy node and set its next to head       |
+        //   | - Use 'prev' pointer to go to m-th node              |
+        //   | - Use 'current' pointer for m+1 to n nodes           |
+        //   | - Loop to reverse m+1 to n nodes                     |
+        //   | - Update original list's head                        |
+        //   | - Free dummy node memory                             |
         //   +======================================================+
+    
 };
 
 
