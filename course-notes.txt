@@ -2030,11 +2030,13 @@ void append(int value) {
     // Edge Case: if length == 0
     if (length == 0) {
         head = newNode;
+        newNode->next = nullptr;
+        newNode->prev = nullptr;
+    } else {
+        tail->next = newNode;
+        newNode->prev = tail;
+        newNode->next = nullptr;
     }
-    tail->next = newNode;
-    newNode->prev = tail;
-    newNode->next = nullptr;
-    
     
     tail = newNode;
     length++;
