@@ -1808,22 +1808,198 @@ Instructor's Algorithm:
         delete dummy;
     }
 
-Notable difference is Reversal Logic:
-    for (int i = 0; i < n - m; i++) {
-        Node* temp = current->next;
-        current->next = temp->next;
-        temp->next = prev->next;
-        prev->next = temp;
-    }
+Notable difference:
+    1)  for (int i = 0; i < n - m; i++) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            temp->next = prev->next;
+            prev->next = temp;
+        }
+    2) for (int i = 0; i < n - m; i++)
+        - This loop handles the Edge Case where 'm' and 'n' 
+            are equal
 
 All tests Passed
 See 'Test.cpp'
 
+5/26/2026 ----------------------------------------------------------------------------------------
+
+46. LL: Swap Pairs
+
+Execise: Swap two nodes and continue swapping the next two nodes until the end of the list
+        - If there are an ODD number of nodes, then do not do anything to the final node
+        - The linked list we are working with has no 'tail' property
+---
+
+Coding Exercise 18: LL: Swap Pairs ( ** Interview Question) 
+
+Process: 
+    - 'prev' node 
+        - always behind 'current' 
+    - 'current' node 
+    - 'right' node 
+        - this node is after 'current' 
+    - 'dummy' node 
+        - value = 0 
+        - used to give 'prev' a starting position 
+        - can be used to set new 'head' node 
+    1) If length is 1 or less, then early return 
+    2) While 'right' is valid, 
+    3) Swap nodes 
+        - Set 'prev->next' to 'right' 
+        - Set 'current->next' to 'right->next' 
+        - Set 'right->next' to 'current' 
+    7) Advance nodes 
+        - Set 'prev' to 'current' 
+        - Set 'current' to 'current->next'
+        - Set 'next' to 'current->next'
+
+Time Complexity: O(n)
+
+My Algorithm:
+
+    void swapPairs() {
+            
+        if (length <= 1) return;
+
+        Node* current = head;
+        Node* right = current->next;
+        Node* dummy = new Node(0);
+
+        dummy->next = head;
+        Node* prev = dummy;
+        head = right;
+
+        while (right) {
+            current->next = right->next; 
+            right->next = current; 
+            prev->next = right;
+            
+            prev = current;
+            current = current->next; 
+            right = (current) ? current->next : nullptr; 
+        }
+
+        delete dummy;
+        dummy = nullptr;
+    }
+
+Instructor's Algorithm:
+
+    void swapPairs() {
+        Node* dummy = new Node(0);
+        dummy->next = head;
+    
+        Node* previous = dummy;
+        Node* first = head;
+    
+        // Continue as long as we have at least two nodes
+        while (first != nullptr && first->next != nullptr) {
+            Node* second = first->next;     // Second node of the pair
+    
+            previous->next = second;        // Step 1: Link prev to second
+            first->next = second->next;     // Step 2: Link first to the node after second
+            second->next = first;           // Step 3: Link second to first
+    
+            previous = first;               // Move previous to first
+            first = first->next;            // Move to the next pair
+        }
+    
+        // Update the head pointer
+        head = dummy->next;
+        delete dummy;
+    }
+
+Notable differences:
+    While Loops
+        Mine: while (right) 
+            - less safe
+            - assumes 'current' is valid
+            - relies on earlier logic remaining correct
+            - extra conditional,
+                right = (current) ? current->next : nullptr;
+                - Slightly More Fragile State Transitions
+                - Adds extra conditional state management.
+        Instructor's: while (first != nullptr && first->next != nullptr) 
+            - safer & better readability
+            - preferable
+            - guarantees that 'first' & 'second' exist 
+
+*End of Section 7: Singley Linked List
+
 ----------------------------------------------------------------------------------------
 
+*Start of Section 8: Doubly Linked Lists
 
+Note: Section 8, 9, and 10 are all about Doubly Linked Lists.
+        There won't be a folder for section 8 and 9 because I only want to focus on putting 
+        notes in this 'course-notes.txt' file. This file will still contain my code from
+        the coding exercises I in Section 9: <> DLL: Coding Exercise.
+      Section 10 will have its own folder because that is where I will implement my own 
+        algorithms for each exercise.
 
+----------------------------------------------------------------------------------------
 
+47. DLL: Constructor
+
+Doubly Linked Lists
+    - Doubly Linked Lists are similar to Singly Linked Lists
+    - Each node has a 'prev' Property
+        - 'prev' points the node behind
+        - 'head->prev' = nullptr
+
+class Node { 
+
+public: 
+    int value; 
+    Node* next; 
+    Node* prev; 
+
+    Node(int value) { 
+        this->value = value; 
+        next = nullptr; 
+        prev = nullptr; 
+    } 
+} 
+
+Preferable constructor in modern C++:
+    // Using an initializer list
+    Node(int val) : value(val), next(nullptr), prev(nullptr) {}
+
+    *This is generally preferred in C++ because it initializes the members directly rather 
+        than assigning values after they've already been created, which is more efficient.
+
+--- 
+
+Coding Exercise 19: DLL: Constructor 
+
+class DoublyLinkedList {
+    private:
+        Node* head;
+        Node* tail;
+        int length;
+    
+    public:
+        // Constructor
+        DoublyLinkedList(int value) {
+            Node* newNode = new Node(value);
+            head = newNode;
+            tail = newNode;
+            length = 1;
+        }
+}
+
+with initializer list:
+    DoublyLinkedList(int value) 
+        : head(new Node(value)), 
+          tail(head), 
+          length(1) 
+        {}
+
+All 5 tests passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050914#questions
+
+----------------------------------------------------------------------------------------
 
 
 
