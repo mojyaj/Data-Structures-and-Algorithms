@@ -2132,6 +2132,48 @@ source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6
 
 ----------------------------------------------------------------------------------------
 
+50. DLL: Prepend
 
+Process: 
+    1) Create new Node from argument 'value'
+    2) Edge Case: if length == 0, then
+        - set 'head' and 'tail' = 'newNode'
+    3) Else, begin swapping 'newNode' and 'head'
+        - set 'newNode->next' = 'head'
+        - set 'head->prev' = 'newNode'
+        - set 'head' = 'newNode'
+    4) Increment 'length'
+
+---
+
+Coding Exercise 22: DLL: Prepend
+
+void prepend(int value) {
+
+    Node* newNode = new Node(value);
+
+    if (length == 0) {
+        tail = newNode;
+        head = newNode;
+    } else {
+        newNode->next = head;
+        head->prev = newNode;
+        newNode->prev = nullptr; // This is not needed because 'newNode->prev' is already nullptr
+        head = newNode;
+    }
+
+    length++;
+}
+
+Notable Differences:
+    - all lines of code match except
+        newNode->prev = nullptr;
+      *this line is not needed because 'newNode->prev' is already nullptr
+    - instructor's algorithm not included because both are nearly identical
+
+All tests passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050920#questions
+
+----------------------------------------------------------------------------------------
 
 
