@@ -2176,4 +2176,48 @@ source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6
 
 ----------------------------------------------------------------------------------------
 
+51. DLL: Delete First
 
+Process:
+    1) Edge Case: if 'length' == 0, then early return
+    2) Edge Case: if 'length' == 1, then delete 'head'
+                    - set 'head' & 'tail' = nullptr
+    3) else, swap to 'new head' and delete 'old head'
+        - create 'temp' Node = 'head' 
+        - set 'head' = 'head->next' 
+        - set 'head->prev' = nullptr
+    4) decrement 'length'
+
+---
+
+Coding Exercise 23: DLL: Delete First 
+
+void deleteFirst() { 
+
+    if (length == 0) return; 
+    if (length == 1) { 
+        delete head; 
+        head = nullptr; 
+        tail = nullptr; 
+    } else {
+        Node* temp = head; 
+        head = head->next; 
+        head->prev = nullptr; 
+        delete temp; 
+    } 
+
+    length--; 
+} 
+
+Notable Differences:
+    - Since both solutions are nearly identical
+    - I create the 'temp' node inside the else body and as a consequence:
+        - had to call 'delete head' when 'length == 1'
+        - had to call 'delete temp(head)' inside else body
+    - Instructor created 'temp' directly in the method body
+        - only had to call 'delete' once via else body
+
+All tests passed 
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050922#questions 
+
+----------------------------------------------------------------------------------------
