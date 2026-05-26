@@ -2221,3 +2221,70 @@ All tests passed
 source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050922#questions 
 
 ----------------------------------------------------------------------------------------
+
+52. DLL: Get
+
+Return a node at the specified index
+
+Similar to LL Get method
+    - 0 based index
+
+Constraints: 
+    - index cannot be out of range
+        - Not less than 0
+        - Not greater than or equal to length
+
+Time Complexity: O(logn)
+
+Process:
+
+
+---
+
+Coding Exercise 24: DLL: Get
+
+My solution:
+    Node* get(int index) { 
+    
+        if (length == 0) return nullptr; 
+        if (index < 0 || index >= length) return nullptr; 
+
+        bool forward = index < length / 2;  // traversal direction
+        Node* current = (forward) ? head : tail; 
+
+        int it = forward ? index : length-index-1; // Compute required iterations 
+        for (int i = 0; i < it; i++) { 
+            current = (forward) ? current->next : current->prev; 
+        } 
+    
+        return current; 
+    }
+
+Instructor's solution (preferable):
+    Node* get(int index) {
+            if (index < 0 || index >= length) return nullptr;
+            Node* temp = head;
+            if (index < length/2) {
+                for (int i = 0; i < index; ++i) {
+                    temp = temp->next;
+                }
+            } else {
+                temp = tail;
+                for (int i = length - 1; i > index; --i) {
+                    temp = temp->prev;
+                }
+            }
+            return temp;
+        }
+
+Solution differences:
+    My solution
+        - more compact 
+        - slightly less readable
+    instructor's solution
+        - simple
+        - readable
+
+----------------------------------------------------------------------------------------
+
+
