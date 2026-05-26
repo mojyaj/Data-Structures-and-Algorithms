@@ -2001,6 +2001,47 @@ source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6
 
 ----------------------------------------------------------------------------------------
 
+48. DLL: Append
 
+Append Process:
+    1) create new Node
+    2) check if 'length' == 0
+        - if true, then set 'head' equal to 'newNode'
+        - else, go to next step 
+            *enter else body
+    2) set 'tail->next' equal to 'newNode' created in step 1
+    3) set 'newNode->next' equal to nullptr
+    4) set 'newNode->prev' equal to 'tail' 
+            *exit else body
+    5) set 'tail' equal to 'newNode'
+    6) Increment 'length'
+
+Edge Case: length == 0
+    - Add the 'newNode' to be appended and set its 'head' and 'tail'  to 'newNode'
+
+---
+
+Coding Exercise 20: DLL: Append
+
+void append(int value) {
+
+    Node* newNode = new Node(value);
+
+    // Edge Case: if length == 0
+    if (length == 0) {
+        head = newNode;
+    }
+    tail->next = newNode;
+    newNode->prev = tail;
+    newNode->next = nullptr;
+    
+    
+    tail = newNode;
+    length++;
+
+}
+
+
+----------------------------------------------------------------------------------------
 
 
