@@ -2287,6 +2287,9 @@ Solution differences:
         - simple
         - readable
 
+All tests passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050926#questions
+
 ----------------------------------------------------------------------------------------
 
 53. DLL: Set
@@ -2317,7 +2320,65 @@ bool set(int index, int value) {
 All tests passed
 source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050928#questions
 
+5/27/2026 ----------------------------------------------------------------------------------------
+
+54. DLL: Insert 
+
+Implement the insert member function that inserts a new node with a specified value at a 
+    given index in the doubly-linked list. 
+
+the node to be inserted is placed after the node at the specified index 
+if 'index' == 0, then call 'prepend()' 
+    - 'prepend()' internally 
+        - handles insert when length == 0 
+        - increments 'length' 
+if 'index' == length, then call 'prepend()' 
+    - 'prepend()' internally 
+        - increments 'length' 
+call 'get(index-1)' 
+    - 'index-1' because we're using 0-based index and each element does
+        not have an assigned index number
+update 'next', 'prev', and 'length' 
+
+---
+
+Coding Exercise 26: DLL: Insert 
+
+bool insert(int index, int value) { 
+
+    if (index < 0 || index > length) return false; 
+
+    if (index == length) { 
+        append(value); 
+        return true; 
+    } 
+    if (index == 0 && length != 0) { 
+        prepend(value); 
+        return true; 
+    } 
+
+    Node* newNode = new Node(value); 
+    Node* node = get(index-1);      // temporary node
+    newNode->next = node->next; 
+    node->next->prev = newNode; 
+    node->next = newNode; 
+    newNode->prev = node; 
+
+    length++; 
+    return true; 
+} 
+
+Solution differences:
+    Instructor's code contains 2 temporary Nodes used for the insertion process
+        1) Node* before = get(index-1)
+        2) Node* after = before->next
+        *This is preferable and readable
+
+All tests passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050930#questions
+
 ----------------------------------------------------------------------------------------
+
 
 
 
