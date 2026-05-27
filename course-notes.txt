@@ -2379,6 +2379,135 @@ source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6
 
 ----------------------------------------------------------------------------------------
 
+55. DLL: Delete Node
+
+
+
+---
+
+Coding Exercise 27: DLL: Delete Node
+
+My algorithm (1):
+    void deleteNode(int index) {
+        
+        if (length == 0) return;
+        if (index < 0 || index >= length) return;
+        
+        if (index == 0) {
+            deleteFirst();
+            return;
+        }
+        if (index == length-1) {
+            deleteLast();
+            return;
+        }
+        
+        Node* target = get(index);
+        Node* before = target->prev;
+        Node* after = target->next;
+        before->next = after;
+        after->prev = before;
+    
+        length--;
+        delete target;
+    }
+
+Solution Difference:
+    Instructor
+        - Does not use temporary nodes
+            - less readable
+    Mine
+        - Utilizes 2 additional temporary nodes
+            1) 'before'
+            2) 'after'
+            - readable
+            - maintainable
+
+All tests passed
+source: https://www.udemy.com/course/data-structures-algorithms-cpp/learn/quiz/6050932#questions
+
+*End of Section 8 & 9
+
+----------------------------------------------------------------------------------------
+
+*Start of Section 10: <> DLL: Interview / Leetcode Exercises
+
+56. DLL: Palindrome Checker
+
+Palindrome:
+    The values in the first-half are the same as the values in the second-half of the list.
+    If there are an odd number of elements in the list then the middle value is ignored.
+
+A single number is considered a Palindrome:
+    0 is Palindrome
+    1 is Palindrome
+    9 is palindrome
+
+EMPTY List
+    An empty list is considered a palindrome.
+
+Palidrome example: 1 2 4 2 1
+
+Consider the length of the list
+
+Rough thought process:
+    - return bool
+    - check edge cases
+        - length == 0
+        - length == 1
+        - if any of the above are true, then return true
+    - Compute number of iterations required
+        - example, length = 5
+                   it = 5/2 = 2
+                   * 5/2 == 2.5, but the .5 is truncated
+    - create 2 temporary nodes
+        1) 'left' = head,  traverse forwards towards middle
+        2) 'right' = tail, traverse backwards towards middle
+         
+---
+
+Coding Exercise 28: DLL: Palindrome Checker
+
+Time Complexity: O(logn)
+
+My algorithm:
+
+    bool isPalindrome() {
+
+        if (length <= 1) return true;
+
+        Node* left = head;
+        Node* right = tail;
+
+        int it = length/2;
+        while (it > 0) {
+            if (left->value != right->value) return false;
+            left = left->next;
+            right =right->prev;
+            it--;
+        }
+
+        return true;
+    }
+    
+Instructor's algorithm:
+    bool isPalindrome() {
+        if (length <= 1) return true;
+
+        Node* forwardNode = head;
+        Node* backwardNode = tail;
+        for (int i = 0; i < length / 2; i++) {
+            if (forwardNode->value != backwardNode->value) return false;
+            forwardNode = forwardNode->next;
+            backwardNode = backwardNode->prev;
+        }
+        return true;
+    }
+    
+All tests Passed
+*See results in 'Section-10-Interview-LeetCode/src-56-DLL-Palindrome-Checker/Test.cpp'
+
+----------------------------------------------------------------------------------------
 
 
 
