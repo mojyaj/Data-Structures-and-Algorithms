@@ -254,7 +254,7 @@ Notable Behavior between Pointers and Normal Variables
     - Normal Variables only know about a stored value
 
     Normal:
-        int num1 = 11;
+        int num1 = new 11;
         int num2 = num1;
         num1 = 22;
         // psuedo code: print num1 & num2
@@ -266,7 +266,7 @@ Notable Behavior between Pointers and Normal Variables
     Pointers:
         int* num1 = new int(11);
         int* num2 = num1;
-        num1 = 22;
+        *num1 = new int(22);
         // psuedo code: print num1 & num2
 
         output:
@@ -2506,6 +2506,111 @@ Instructor's algorithm:
     
 All tests Passed
 *See results in 'Section-10-Interview-LeetCode/src-56-DLL-Palindrome-Checker/Test.cpp'
+
+----------------------------------------------------------------------------------------
+
+57. DLL: Reverse
+
+Rverse the order of the nodes in the list.
+
+Example,
+    Head: 1
+    Tail: 5
+    Length: 5
+    1 <-> 2 <-> 3 <-> 4 <-> 5
+    
+    Doubly Linked List:
+    5 <-> 4 <-> 3 <-> 2 <-> 1
+    Head: 5
+    Tail: 1
+    Length: 5
+
+Constraints:
+*constraints from the lecture document were not worded clearly enough
+*I've made constraint statements more explicit
+    - The list MUST be processed without checking length 
+        example, 'if' statements:
+        1) length == 0
+        2) length == 1
+        3) length == 2
+
+Time Complexity: O(n)
+
+---
+
+Coding Exercise 29: DLL: Reverse
+
+Add another test into 'Test.cpp'
+    - Test: Reverse Multiple with Odd Number of Nodes
+
+My algorithm with while loop:
+    void reverse() {
+        if (length <= 1) return;
+        
+        Node* left = head;
+        Node* right;
+
+        do {
+            right = left->next; // advance ahead of 'left' by 1 node
+
+            left->next = left->prev;
+            left->prev = right;
+            right->prev = right->next;
+            right->next = left;
+
+            left = right->prev; // advance by 2 nodes from current position
+        } while (left && left->next); // (1)-(2)-(3)-(4)-nullptr
+                                            //          l   r
+        Node* temp = tail;
+        tail = head;
+
+        // Edge case: 'length' == 2,      (1)-(2)-nullptr
+        //      where 'left' == nullptr             l                         l
+        if (left) {    
+            temp->prev = temp->next; // nullptr
+            temp->next = right;
+        }
+        head = temp;
+    }
+
+    - do/while (left && left->next) could be simplified 
+        to while (left) instead
+    - storing a 'right'-side node
+        - this forced more steps for swap logic
+        - difficult to read
+    - Traversing with one temporary node, 'current', while using another
+        temporary node, 'temp', for caching
+        1) makes validating 'current' simple & easy to read
+        2) makes swap logic much shorter & easy to read
+
+Instructor's algorithm (Much simpler & Easiest to Read):
+   void reverse() {
+        Node* current = head;
+        Node* temp = nullptr;
+    
+        while (current != nullptr) {
+            temp = current->prev;
+            current->prev = current->next;
+            current->next = temp;
+            current = current->prev;
+        }
+    
+        temp = head;
+        head = tail;
+        tail = temp;
+    } 
+
+"Kill two birds with ONE stone"
+Observations:
+    - These two lines handle 2 edge cases where list is EMPTY and have ONE item
+        1) Node* current = head;
+        2) while (current != nullptr)
+            - if 'head' is nullptr, then 'length' must be 0
+                - exit while loop with 0 iterations
+    - This swap logic is always SAFE and eliminates extra if/else statements
+        temp = head;
+        head = tail;
+        tail = temp;
 
 ----------------------------------------------------------------------------------------
 
