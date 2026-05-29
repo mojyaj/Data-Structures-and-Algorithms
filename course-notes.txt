@@ -20,6 +20,10 @@ Personal Thoughts on Course
         - example,  "Use 'current' pointer for m+1 to n nodes"
                     "Use 'prev' pointer to go to m-th node"
           correction: 'current' = m & 'prev' = m-1
+    - Instructors clearly shows that he used AI to write the 'Test.cpp' file
+        for 58. DLL: Partition List
+        - example, 
+                    🧪 Test Case 2: All values < x (x = 5)
 
 ----------------------------------------------------------------------------------------
 
@@ -2507,7 +2511,7 @@ Instructor's algorithm:
 All tests Passed
 *See results in 'Section-10-Interview-LeetCode/src-56-DLL-Palindrome-Checker/Test.cpp'
 
-----------------------------------------------------------------------------------------
+5/28/2026 ----------------------------------------------------------------------------------------
 
 57. DLL: Reverse
 
@@ -2614,5 +2618,122 @@ Observations:
 
 ----------------------------------------------------------------------------------------
 
+58. DLL: Partition List
+
+Rearrange the nodes in a doubly linked list so that all nodes with values less than a 
+    given integer x appear before nodes with values greater than or equal to x.
+
+Very similar to Singly Linked List partitionList() with one major difference
+    - Two dummy nodes
+
+Edge Case: Second dummy list is empty
+    - Make sure to set the 'prev' property of the node being appended to the final
+        node in the first dummy list
+    *Instructor's 'Test.cpp' contains no test for this edge case
+    - I wrote a test for this specific edge case and included 'getMiddle()' into the 
+        doubly linked list class so that I can test this edge case
+        Test Case 6: Ensure 'prev' property is set for 2nd list, x = 5
+        Test Result: 
+            BEFORE: 3 <-> 8 <-> 5 <-> 10 <-> 2 <-> 4 <-> 11
+            AFTER:  3 <-> 2 <-> 4 <-> 8 <-> 5 <-> 10 <-> 11
+            Expected Middle Node -> 'prev': 4
+            Actual Middle Node -> 'prev': 4
+
+Time Complexity: O(n)
+
+---
+
+Coding Exercise 30: DLL: Partition List
+
+My algorithm:
+    void partitionList(int x) {
+        if (head == nullptr) return;
+
+        Node dummy1(0);
+        Node dummy2(0);
+        Node* prev1 = &dummy1;
+        Node* prev2 = &dummy2;
+        Node* current = head;
+
+        while (current != nullptr) {
+            if (current->value < x) {
+                prev1->next = current;
+                current->prev = prev1;
+                prev1 = current;
+            } else {
+                prev2->next = current;
+                current->prev = prev2;
+                prev2 = current;
+            }
+            current = current->next;
+        }
+
+        prev2->next = nullptr;
+        prev1->next = dummy2.next;
+        if (dummy2.next) {
+            dummy2.next->prev = prev1;
+        }
+        head = dummy1.next;
+    }
+
+Instructor algorithm:
+    void partitionList(int x) {
+        // If the list is empty, do nothing
+        if (!head) return;
+    
+        // Create two dummy nodes to start the two partitions
+        Node* dummy1 = new Node(0);  // For values < x
+        Node* dummy2 = new Node(0);  // For values >= x
+    
+        // prev1 and prev2 will build the two lists
+        Node* prev1 = dummy1;
+        Node* prev2 = dummy2;
+    
+        Node* current = head;
+    
+        while (current != nullptr) {
+            Node* nextNode = current->next;  // Save the next node
+    
+            // Disconnect the node from the list
+            current->next = nullptr;
+            current->prev = nullptr;
+    
+            if (current->value < x) {
+                // Append to the 'less than x' list
+                prev1->next = current;
+                current->prev = prev1;
+                prev1 = current;
+            } else {
+                // Append to the 'greater or equal to x' list
+                prev2->next = current;
+                current->prev = prev2;
+                prev2 = current;
+            }
+    
+            current = nextNode;
+        }
+    
+        // Terminate the greater-or-equal list
+        prev2->next = nullptr;
+    
+        // Connect the two lists
+        prev1->next = dummy2->next;
+    
+        if (dummy2->next != nullptr) {
+            dummy2->next->prev = prev1;
+        }
+    
+        // Update the head of the full list
+        head = dummy1->next;
+        if (head) head->prev = nullptr;
+    
+        // Clean up
+        delete dummy1;
+        delete dummy2;
+    }
+
+Both algorithms are near identical and follow the steps similar to singly linked list 'partitionList()'
+
+----------------------------------------------------------------------------------------
 
 
