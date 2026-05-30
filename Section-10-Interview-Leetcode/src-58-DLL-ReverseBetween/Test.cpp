@@ -7,7 +7,30 @@ using std::to_string;
 
 /* Test Result
 
+    ========== Test Case 1: Reverse Middle Section Only ==========
+    Before: 3 <-> 8 <-> 5 <-> 10 <-> 2 <-> 1
+    After:  3 <-> 2 <-> 10 <-> 5 <-> 8 <-> 1
 
+    ========== Test Case 2: Reverse Entire List ==========
+    Before: 1 <-> 2 <-> 3 <-> 4 <-> 5
+    After:  5 <-> 4 <-> 3 <-> 2 <-> 1
+
+    ========== Test Case 3: Reverse Single Node List ==========
+    Before: 9
+    After:  9
+
+    ========== Test Case 4: Reverse Small Entire List ==========
+    Before: 7 <-> 8 <-> 9
+    After:  9 <-> 8 <-> 7
+
+    ========== Test Case 5: Empty List & Early Exit ==========
+    Before: empty
+    After:  empty
+    Length: 0
+
+    ========== Test Case 6: Same Arguments & Early Exit ==========
+    Before: 1 <-> 2 <-> 3
+    After:  1 <-> 2 <-> 3
 
 */
 

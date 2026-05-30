@@ -1914,7 +1914,7 @@ My Algorithm:
 
     void swapPairs() {
             
-        if (length <= 1) return;
+        if (length <= 1) return; // this breaks constraints
 
         Node* current = head;
         Node* right = current->next;
@@ -1975,6 +1975,10 @@ Notable differences:
                 - Slightly More Fragile State Transitions
                 - Adds extra conditional state management.
         Instructor's: while (first != nullptr && first->next != nullptr) 
+            - uses 3 temporary nodes
+                1) 'previous'
+                2) 'first'
+                3) ' second'
             - safer & better readability
             - preferable
             - guarantees that 'first' & 'second' exist 
@@ -2784,7 +2788,7 @@ Instructor algorithm:
 
 Both algorithms are near identical and follow the steps similar to singly linked list 'partitionList()'
 
-----------------------------------------------------------------------------------------
+5/29/2026 ----------------------------------------------------------------------------------------
 
 Coding Exercise 31: DLL: Reverse Between
 
@@ -2904,6 +2908,163 @@ Notable algorithm difference:
 
 ----------------------------------------------------------------------------------------
 
+Coding Exercise 32: DLL: Swap Nodes in Pairs
+
+***
+Document:
+    _________________________________
+    ATTENTION: Advanced Doubly Linked List Challenge Ahead!
+
+    This question is acknowledged as one of the more intricate challenges within the 
+    Doubly Linked List section. It's not unusual for students to find this task quite 
+    formidable at this point in the course.
+
+    If you're considering diving into this problem, it's crucial to approach it 
+    methodically. I recommend drawing out the list structures and operations to better 
+    visualize the problem. This challenge demands a deep understanding of Doubly Linked 
+    Lists' unique characteristics and manipulation techniques.
+
+    Use this opportunity to deepen your understanding, but also remember it's absolutely 
+    fine to come back to this problem later if it feels overwhelming now. Progress in 
+    complex concepts like these sometimes requires stepping back and revisiting with fresh 
+    insights. Good luck, and remember that perseverance is key in mastering these advanced 
+    topics!
+
+    Now, here is the problem:
+    _________________________________
+
+    Implement a member function called swapPairs() that swaps the values of every two 
+    adjacent nodes in the list.
+
+    Note: This DoublyLinkedList does not have a tail pointer which will make the implementation 
+    easier.
+
+    Input:
+        The function is a member of the DoublyLinkedList class, which has a head and a tail pointer, 
+        as well as a length attribute.
+
+    Output:
+        No explicit output is returned. However, the function should modify the doubly linked list 
+        such that the values of every two adjacent nodes are swapped.
+
+    Constraints:
+        "The doubly linked list may be empty, have only one node, or have two or more nodes."
+
+    Example:
+    Consider the following doubly linked list:
+
+        Head: 1
+        Tail: 6
+        Length: 6
+        
+        Doubly Linked List:
+        1 <-> 2 <-> 3 <-> 4 <-> 5 <-> 6
+
+        After calling swapPairs(), the list should be:
+
+        Head: 2
+        Tail: 5
+        Length: 6
+        
+        Doubly Linked List:
+        2 <-> 1 <-> 4 <-> 3 <-> 6 <-> 5
+
+    Consider the following doubly linked list:
+
+        Head: 1
+        Tail: 5
+        Length: 5
+        
+        Doubly Linked List:
+        1 <-> 2 <-> 3 <-> 4 <-> 5
+
+        After calling swapPairs(), the list should be:
+
+        Head: 2
+        Tail: 4
+        Length: 5
+        
+        Doubly Linked List:
+        2 <-> 1 <-> 4 <-> 3 <-> 5
+
+    Note that the pointers to the nodes themselves are updated to achieve 
+    the swapping of adjacent nodes.  Do not update the values of the nodes.
+***
+
+My algorithm:
+    void swapPairs() {
+        Node* dummy = new Node(0);
+        dummy->next = head;
+
+        Node* left = dummy;
+        Node* middle = head;
+
+        while (middle && middle->next) {
+            Node* right = middle->next;
+
+            left->next = right;
+            middle->next = right->next;
+            right->next = middle;
+            if (middle->next) middle->next->prev = middle;
+            middle->prev = right;
+            right->prev = left;
+            
+            left = middle;
+            middle = middle->next;
+        }
+
+        head = dummy->next;
+        head->prev = nullptr;
+        delete dummy;
+        dummy = nullptr;
+    }
+
+Instructor's algorithm:
+    void swapPairs() {
+        Node dummyNode(0);
+        dummyNode.next = head;
+        Node* previousNode = &dummyNode;
+    
+        while (head != nullptr && head->next != nullptr) {
+            Node* firstNode = head;
+            Node* secondNode = head->next;
+    
+            previousNode->next = secondNode;
+            firstNode->next = secondNode->next;
+            secondNode->next = firstNode;
+    
+            secondNode->prev = previousNode;
+            firstNode->prev = secondNode;
+            if (firstNode->next != nullptr) {
+                firstNode->next->prev = firstNode;
+            }
+    
+            head = firstNode->next;
+            previousNode = firstNode;
+        }
+    
+        head = dummyNode.next;
+        if (head) head->prev = nullptr;
+    }
+
+Notable Comparisons:
+    Both:
+        - are O(n) time and O(1) space
+        - both are readable
+    mine:
+        - Heap allocation
+            - Node* dummy = new Node(0)
+            - prefer,
+                    Node dummy(0);
+                    dummy->next = head;
+                    *This is safest
+    other:
+        - No heap allocation
+            - preferable to avoid ownership of Heap memory if possible
+        - Updates 'head' at the end of every iteration
+
+*End of Section 10
+----------------------------------------------------------------------------------------
 
 
 
