@@ -3086,22 +3086,23 @@ Stack Talking Points
         - Stack of plates
         - First plate at the very top is the first plate that can be accessed
         - Cannot get any plates below until the very top plate is removed
-    - FIFO 
+    - FIFO  protocol
         - Last-In  First-Outer
         - Last item placed into a list is the First item to be removed
     - pop - key terminology
         - 'pop' - the item at the top of the stack is removed
         - 'pop' off
+        - O(1)
+    - push - key terminology
+        - 'push' - an item is added to the top of the stack
+        - O(1)
     - vector - data type
         - std::vector
         - Not fundamentally a stack structure
         - A dynamic array
         - Provides all necessary functionality to behave exactly like a 'stack'
-        - common methods
-            - push_back(), adds an item to the top of stack
-            - pop(), removes item from from the top of stack
     - Adding/Removing items is O(1)
-    - Stacks add/remove items from the same end
+    - Stack add & remove items from the same end
     - The element/item at the very bottom 
     
 5/30/2026 ----------------------------------------------------------------------------------------
@@ -3198,4 +3199,28 @@ int pop() {
 }
 
 ----------------------------------------------------------------------------------------
+
+63. Queue: Intro
+
+Queue Talking Points
+    - properties
+        - 'first', stores the most recent Node in the Queue
+        - 'last', stores the oldest Node in the Queue
+        - 'length', number of elements in the Queue
+    - Analogy
+        - Standing in line and waiting to ...
+        - The first person who enters the line is the first person that can leave the line
+    - FIFO  protocol
+        - First-In  First-Out
+        - First element added  will be the  first element to exit out  of the list
+    - inQueue(), adds items to the Queue
+        - O(1)
+    - deQueue(), removes items to the Queue
+        - O(1)
+    - Linked List should be the foundation for building a Queue
+
+----------------------------------------------------------------------------------------
+
+    
+    
 
