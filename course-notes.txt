@@ -3002,7 +3002,7 @@ My algorithm:
         while (middle && middle->next) {
             Node* right = middle->next;
 
-            left->next = right;
+            left->next = right; // this also changes 'dummy->next' = 'right' on first iteration
             middle->next = right->next;
             right->next = middle;
             if (middle->next) middle->next->prev = middle;
@@ -3080,6 +3080,8 @@ Stack Talking Points
         - 'top' points to the item at the very top of list
             - equivalent to 'head' for linked lists
             - there is no 'tail' or 'bottom' property
+        - 'height' property stores the number of elements in the stack
+            - equivalent to 'length' for linked lists
     - Analogy
         - Stack of plates
         - First plate at the very top is the first plate that can be accessed
@@ -3102,7 +3104,44 @@ Stack Talking Points
     - Stacks add/remove items from the same end
     - The element/item at the very bottom 
     
-----------------------------------------------------------------------------------------
+5/30/2026 ----------------------------------------------------------------------------------------
+
+60. Stack: Constructor
+
+--- Coding Exercise 33: Stack: Constructor
+
+class Stack {
+    private:
+        Node* top;
+        int height;
+        
+    public:
+    
+        Stack(int value) {
+            Node* newNode = new Node(value);
+            top = newNode;
+            height = 1;
+        }
+        //   +=====================================================+
+        //   |                 WRITE YOUR CODE HERE                |
+        //   | Description:                                        |
+        //   | - This is the constructor for the Stack class.      |
+        //   | - It takes an integer value to initialize the stack |
+        //   |   with a single node.                               |
+        //   | - The method sets up the 'top' pointer and          |
+        //   |   initializes the 'height' of the stack.            |
+        //   | - Return type: n/a (constructor)                    |
+        //   |                                                     |
+        //   | Tips:                                               |
+        //   | - Create a new Node object with the given value.    |
+        //   | - Set 'top' to point to this new node.              |
+        //   | - Set 'height' to 1 as there is one node.           |
+        //   | - Check output from Test.cpp in "User logs".        |
+        //   +=====================================================+
+    
+    ...
+}
+
 
 
 
