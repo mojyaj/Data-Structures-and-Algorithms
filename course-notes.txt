@@ -3064,7 +3064,46 @@ Notable Comparisons:
         - Updates 'head' at the end of every iteration
 
 *End of Section 10
+
 ----------------------------------------------------------------------------------------
+
+*Start of Section 11: Stacks & Queue
+and       Section 12: <> S&Q: Coding Exercises
+----------------------------------------------------------------------------------------
+
+59. Stack: Intro
+
+Stack Talking Points 
+    - properties
+        - 'next' points to the element below itself
+        - the element at the very bottom points to nullptr
+        - 'top' points to the item at the very top of list
+            - equivalent to 'head' for linked lists
+            - there is no 'tail' or 'bottom' property
+    - Analogy
+        - Stack of plates
+        - First plate at the very top is the first plate that can be accessed
+        - Cannot get any plates below until the very top plate is removed
+    - FIFO 
+        - Last-In  First-Outer
+        - Last item placed into a list is the First item to be removed
+    - pop - key terminology
+        - 'pop' - the item at the top of the stack is removed
+        - 'pop' off
+    - vector - data type
+        - std::vector
+        - Not fundamentally a stack structure
+        - A dynamic array
+        - Provides all necessary functionality to behave exactly like a 'stack'
+        - common methods
+            - push_back(), adds an item to the top of stack
+            - pop(), removes item from from the top of stack
+    - Adding/Removing items is O(1)
+    - Stacks add/remove items from the same end
+    - The element/item at the very bottom 
+    
+----------------------------------------------------------------------------------------
+
 
 
 

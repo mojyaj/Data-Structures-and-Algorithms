@@ -7,8 +7,33 @@ using std::to_string;
 
 /* Test Results:
 
+    ----- Test: Swap Pairs with Single Node -----
+    DLL before swapping pairs:
+    1
 
-    
+    DLL after swapping pairs:
+    1
+    Head value after swapping pairs: 1 - EXPECTED: 1
+    PASS
+
+    ----- Test: Swap Pairs with Two Nodes -----
+    DLL before swapping pairs:
+    1 <-> 2
+
+    DLL after swapping pairs:
+    2 <-> 1
+    Head value after swapping pairs: 2 - EXPECTED: 2
+    Next value after swapping pairs: 1 - EXPECTED: 1
+    PASS
+
+    ----- Test: Swap Pairs with Multiple Nodes -----
+    DLL before swapping pairs:
+    1 <-> 2 <-> 3 <-> 4 <-> 5
+
+    DLL after swapping pairs:
+    2 <-> 1 <-> 4 <-> 3 <-> 5
+    PASS
+
 */
 
 static void test() {
@@ -70,3 +95,4 @@ int main() {
     test();
     return 0;
 }
+
