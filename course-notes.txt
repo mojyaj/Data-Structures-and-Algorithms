@@ -3221,6 +3221,37 @@ Queue Talking Points
 
 ----------------------------------------------------------------------------------------
 
-    
-    
+64. Queue: Constructor
+
+Description:                                  
+- This is the constructor for the Queue class. 
+- It takes an integer value to initialize the 
+  queue with a single node. 
+- The method sets up the 'first' and 'last'   
+  pointers, and initializes the 'length'.     
+- Return type: n/a (constructor) 
+
+--- 
+
+Coding Exercise 36: Queue: Constructor
+class Queue {
+private:
+        Node* first;
+        Node* last;
+        int length;
+
+public:
+    Queue(int value) {
+        Node* newNode = new Node(value);
+        first = newNode;
+        last = newNode;
+        length = 1;
+    }
+ 
+    ...
+}
+
+----------------------------------------------------------------------------------------
+
+
 
