@@ -3108,6 +3108,14 @@ Stack Talking Points
 
 60. Stack: Constructor
 
+Description:                                       
+- This is the constructor for the Stack class.     
+- It takes an integer value to initialize the stack
+  with a single node.                              
+- The method sets up the 'top' pointer and         
+  initializes the 'height' of the stack.           
+- Return type: n/a (constructor)                   
+
 --- Coding Exercise 33: Stack: Constructor
 
 class Stack {
@@ -3122,28 +3130,41 @@ class Stack {
             top = newNode;
             height = 1;
         }
-        //   +=====================================================+
-        //   |                 WRITE YOUR CODE HERE                |
-        //   | Description:                                        |
-        //   | - This is the constructor for the Stack class.      |
-        //   | - It takes an integer value to initialize the stack |
-        //   |   with a single node.                               |
-        //   | - The method sets up the 'top' pointer and          |
-        //   |   initializes the 'height' of the stack.            |
-        //   | - Return type: n/a (constructor)                    |
-        //   |                                                     |
-        //   | Tips:                                               |
-        //   | - Create a new Node object with the given value.    |
-        //   | - Set 'top' to point to this new node.              |
-        //   | - Set 'height' to 1 as there is one node.           |
-        //   | - Check output from Test.cpp in "User logs".        |
-        //   +=====================================================+
-    
+
     ...
 }
 
+----------------------------------------------------------------------------------------
 
+61. Stack: Push
 
+Description:                                     
+- This is the push function for the Stack class. 
+- It takes an integer value to add to the stack. 
+- The method creates a new node and makes it the 
+  new 'top' of the stack.                        
+- It also increments the 'height' of the stack.  
+- Return type: void                              
+                                                 
+Tips:                                            
+- Create a new Node object with the given value. 
+- Set the 'next' pointer of the new node to point
+  to the current 'top'.                          
+- Update 'top' to point to the new node.         
+- Increment 'height' by 1.                       
+- Check output from Test.cpp in "User logs".     
 
+---
+
+Coding Exercise 34: Stack: Push
+
+void push(int value) {
+    Node* newNode = new Node(value);
+    newNode->next = top;
+    top = newNode;
+    height++;
+}
+
+----------------------------------------------------------------------------------------
 
 
