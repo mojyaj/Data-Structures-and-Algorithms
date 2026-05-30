@@ -10,20 +10,28 @@ Personal Thoughts on Course
     - Instructor initially refers to 'properties' as 'attributes'
         e.g., "attribute color"
         - Attributes are usually used to represent metadata in C++
-        - instructor refers to 'properties' as 'attributes' again in Section 7 video
-            lecture 39: LL Find Middle, "length attribute"
-    - Visuals were helpful for explaining Link List algorithms.
+        - instructor refers to 'properties' as 'attributes' multiple times throughout
+            this course
+    - Visuals were helpful for explaining Link List algorithms
     - Instructor did not name 'Floyd's cycle-finding algorithm' which would help
         lock-in the algorithm
         - also called, 'Tortoise and Hare algorithm'
+        *Lecture documents later used the correct name and alias
     - lecture 45. LL: Reverse Between Tips in 'LinkedList.cpp' were incorrect
         - example,  "Use 'current' pointer for m+1 to n nodes"
                     "Use 'prev' pointer to go to m-th node"
-          correction: 'current' = m & 'prev' = m-1
+          correct: 'current' = m & 'prev' = m-1
     - Instructors clearly shows that he used AI to write the 'Test.cpp' file
         for 58. DLL: Partition List
         - example, 
                     🧪 Test Case 2: All values < x (x = 5)
+    - Constraints in the document was not explained very well
+        - Coding Exercise 31: DLL: Reverse Between
+        - "This method must reverse the nodes in-place by rearranging the 'next' and 'prev' 
+            pointers without creating new nodes or modifying their values."
+        - I assumed it meant I couldn't create a 'temp' Node* inside the loop which would be used
+            for swapping nodes like in the singly linked list 'reverseBetween()' method.
+        - I assumed that I could only perform swapping with only the 
 
 ----------------------------------------------------------------------------------------
 
@@ -1663,7 +1671,7 @@ Index:  0    1    2    3    4
 
 CLARITY:
     - Both 'm' and 'n' are inclusive
-        - Reverse all nodes inside of range 'm' and 'n' include 'm' and 'n'
+        - Reverse all nodes inside of range 'm' and 'n' including 'm' and 'n'
     - Use 0 based index
         - 0 == first node
         - Need to set 'head' if 0-th node is swapped
@@ -1688,7 +1696,12 @@ Process:
         - used for swapping nodes
     'prev' is set to node(m-1)
         - instructor fatal error
+        - always at a fixed node
         - used for swapping nodes
+            - for each iteration, move the node in front of 'current' to 
+              be in front of 'prev'
+            - prev->next = current->next
+            - make sure to cache with a 'temp' node before swapping
     'tomove' is set to node(current + 1)
     1) Early return for edge cases such as,
         - both arguments are equal
@@ -1769,7 +1782,6 @@ My Algorithm:
     } 
 
 Instructor's Algorithm:
-
     void reverseBetween(int m, int n) {
         // 1. Initial Check:
         if (head == nullptr) return;
@@ -1812,7 +1824,38 @@ Instructor's Algorithm:
         delete dummy;
     }
 
+    void reverseBetween(int m, int n) {
+        if (head == nullptr) return;
+
+        Node* dummy = new Node(0);
+        dummy->next = head;
+        Node* prev = dummy;
+    
+        for (int i = 0; i < m; i++) {
+            prev = prev->next;
+        }
+    
+        Node* current = prev->next;
+    
+        for (int i = 0; i < n - m; i++) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            temp->next = prev->next;
+            prev->next = temp;
+        }
+    
+        head = dummy->next;
+        delete dummy;
+    }
+
 Notable difference:
+    My loop:
+        while (k > 0)
+            body:
+                - if/else conditions
+                - checks current iteration count
+                - complicated & less readable
+    Instructor's:
     1)  for (int i = 0; i < n - m; i++) {
             Node* temp = current->next;
             current->next = temp->next;
@@ -1820,7 +1863,7 @@ Notable difference:
             prev->next = temp;
         }
     2) for (int i = 0; i < n - m; i++)
-        - This loop handles the Edge Case where 'm' and 'n' 
+        - This loop condition handles the Edge Case where 'm' and 'n' 
             are equal
 
 All tests Passed
@@ -1833,6 +1876,13 @@ See 'Test.cpp'
 Execise: Swap two nodes and continue swapping the next two nodes until the end of the list
         - If there are an ODD number of nodes, then do not do anything to the final node
         - The linked list we are working with has no 'tail' property
+    
+What This Exercise Is Designed to Teach    
+    - Pointer manipulation in a singly linked list
+    - In-place modification of node connections
+    - Using a dummy node to simplify head edge cases
+    *See instructor's solution/algorithm
+
 ---
 
 Coding Exercise 18: LL: Swap Pairs ( ** Interview Question) 
@@ -2735,5 +2785,126 @@ Instructor algorithm:
 Both algorithms are near identical and follow the steps similar to singly linked list 'partitionList()'
 
 ----------------------------------------------------------------------------------------
+
+Coding Exercise 31: DLL: Reverse Between
+
+Includes this document:
+    *** 
+    Write a method 'reverseBetween(int startIndex, int endIndex)' that reverses the nodes 
+        of a doubly linked list between the given start and end indices, inclusive.
+
+    Indices are 0-based.
+
+    This method must reverse the nodes in-place by rearranging the 'next' and 'prev' pointers 
+        without creating new nodes or modifying their values.
+
+--> What This Exercise Is Designed to Teach <--
+        - In-place reversal of a sublist in a doubly linked list
+        - Careful pointer manipulation (next and prev)
+        - Use of dummy node to simplify edge cases
+        - Programming with empty or one-node lists
+    ***
+
+Instructor's test cases are not named apropriately
+    - I gave each test case it's own name
+
+My algorithm:
+    void reverseBetween(int n, int m) {
+        if (!head) return;
+
+        Node* dummy = new Node(0);
+        dummy->next = head;
+        Node* prev = dummy;
+
+        for (int i=0; i < n; i++){
+            prev = prev->next;
+        }
+
+        Node* current = prev->next;
+        
+        for (int i=0; i < m - n; i++) {
+            dummy->prev = prev->next;   // use 'dummy->prev' as a temporary cache
+
+            // Swap 'next' properties
+            prev->next = current->next; 
+            current->next = current->next->next;
+            prev->next->next = dummy->prev;  //*Set to old prev->next
+
+            // Swap 'prev' properties
+            if (current->next) {
+                current->next->prev =  current;
+            } else {
+                current->next = nullptr; // tail = current; // no 'tail' property for this class 
+            }
+            dummy->prev->prev = prev->next;
+            prev->next->prev = prev;
+        }
+
+        head = dummy->next;
+        head->prev = nullptr;
+        delete dummy;
+    }
+
+Instructor's algorithm:
+    void reverseBetween(int startIndex, int endIndex) {
+        // Return early if list is empty or no range to reverse
+        if (head == nullptr || startIndex == endIndex) return;
+    
+        // Dummy node simplifies edge case handling
+        Node* dummy = new Node(0);
+        dummy->next = head;
+        head->prev = dummy;
+    
+        // Traverse to node BEFORE start index
+        Node* prev = dummy;
+        for (int i = 0; i < startIndex; i++) {
+            prev = prev->next;
+        }
+    
+        // 'current' is the start of the sublist to reverse
+        Node* current = prev->next;
+    
+        // Reverse using node splicing
+        for (int i = 0; i < endIndex - startIndex; i++) {
+            Node* nodeToMove = current->next;
+    
+            // Detach nodeToMove
+            current->next = nodeToMove->next;
+            if (nodeToMove->next) {
+                nodeToMove->next->prev = current;
+            }
+    
+            // Insert nodeToMove after prev
+            nodeToMove->next = prev->next;
+            prev->next->prev = nodeToMove;
+            prev->next = nodeToMove;
+            nodeToMove->prev = prev;
+        }
+    
+        // Update head in case it changed
+        head = dummy->next;
+        head->prev = nullptr;
+    
+        delete dummy;
+    }
+
+Notable algorithm difference:
+    Mine:
+        - Repeatedly rewires next and prev in a way that is easy to break
+        - Setting all the 'next' properties first forces the following code
+            to be rewired in a less safe way
+        - Best to detach the right-side(current->next) Node in front of 'prev' Node 
+            and then perform rewiring of 'next/prev' pointers
+    Other:
+        - This one follows the singly linked list 'reverseBetween()' method
+            and it is the standard way of reversing nodes
+        - Update exactly four pointers per iteration.
+        - clean
+        - readable
+
+----------------------------------------------------------------------------------------
+
+
+
 
 
