@@ -3213,10 +3213,12 @@ Queue Talking Points
     - FIFO  protocol
         - First-In  First-Out
         - First element added  will be the  first element to exit out  of the list
-    - inQueue(), adds items to the Queue
+    - enQueue(), adds items to the Queue
         - O(1)
+        - "Enqueue"
     - deQueue(), removes items to the Queue
         - O(1)
+        - "Dequeue"
     - Linked List should be the foundation for building a Queue
 
 ----------------------------------------------------------------------------------------
@@ -3228,7 +3230,7 @@ Description:
 - It takes an integer value to initialize the 
   queue with a single node. 
 - The method sets up the 'first' and 'last'   
-  pointers, and initializes the 'length'.     
+  pointers, and initializes the 'length'
 - Return type: n/a (constructor) 
 
 --- 
@@ -3249,6 +3251,36 @@ public:
     }
  
     ...
+}
+
+----------------------------------------------------------------------------------------
+
+65. Queue: Enqueue
+
+Description:                                    
+- This method adds a new node to the end of the 
+  queue (enqueue).                              
+- It takes an integer value for the new node.   
+- Updates 'last' pointer and increases 'length'.
+- Return type: void                             
+
+--- 
+
+Coding Exercise 37: Queue: Enqueue
+
+void enqueue(int value) {
+    Node* newNode = new Node(value);
+    newNode->next = nullptr;
+    
+    if (length == 0) {
+        first = newNode;
+        last = newNode;
+    } else {
+        last->next = newNode;
+        last = newNode;
+    }
+    
+    length++;
 }
 
 ----------------------------------------------------------------------------------------
