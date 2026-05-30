@@ -3167,4 +3167,35 @@ void push(int value) {
 
 ----------------------------------------------------------------------------------------
 
+62. Stack: Pop
+
+Description:                                     
+- This is the pop function for the Stack class.  
+- It removes the top element from the stack.     
+- The method updates the 'top' of the stack and  
+  decrements the 'height'.                       
+- Return type: int (returns the value of the     
+  popped node, or INT_MIN if the stack is empty) 
+    - INT_MIN is the smallest number that 'int' can be
+    - INT_MIN == -2,147,483,648
+---
+
+Coding Exercise 35: Stack: Pop
+
+int pop() {
+            
+    if (height == 0) return INT_MIN;
+    
+    Node* toDelete = top;
+    int value = top->value;
+    top = top->next;
+    height--;
+    
+    delete toDelete;
+    toDelete = nullptr;
+    
+    return value;
+}
+
+----------------------------------------------------------------------------------------
 
