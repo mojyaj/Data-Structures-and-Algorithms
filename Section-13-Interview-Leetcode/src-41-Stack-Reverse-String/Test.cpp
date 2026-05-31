@@ -3,6 +3,40 @@
 
 using namespace std;
 
+/* Test Results:
+
+    ----- Test: Reverse Empty String -----
+    Input: ""
+    Output: "" - EXPECTED: ""
+    PASS
+
+    ----- Test: Reverse Single Character String -----
+    Input: "A"
+    Output: "A" - EXPECTED: "A"
+    PASS
+
+    ----- Test: Reverse Two Character String -----
+    Input: "AB"
+    Output: "BA" - EXPECTED: "BA"
+    PASS
+
+    ----- Test: Reverse Multiple Character String -----
+    Input: "Hello, World!"
+    Output: "!dlroW ,olleH" - EXPECTED: "!dlroW ,olleH"
+    PASS
+
+    ----- Test: Reverse String With Whitespace -----
+    Input: "  A B C  "
+    Output: "  C B A  " - EXPECTED: "  C B A  "
+    PASS
+
+    ----- Test: Reverse String With Special Characters -----
+    Input: "@#$%^&*()"
+    Output: ")(*&^%$#@" - EXPECTED: ")(*&^%$#@"
+    PASS
+
+*/
+
 void test() {
     cout << "\n----- Test: Reverse Empty String -----\n";
     {

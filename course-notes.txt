@@ -3449,7 +3449,47 @@ Examples:
         "ymedU"
 
 My Algorithm:
+    string reverseString(const string& str) {
+        stack<string> stack;
+
+        for (char c : str) {
+            string s(1, c);
+            stack.push(s);
+        }
+        
+        string result;
+        
+        while (!stack.empty()) {
+            result += stack.top();
+            stack.pop();
+        }
+
+        return result;
+    }
+
+Instructor's algorithm:
+    string reverseString(const string& str) {
+        stack<char> charStack;
+        string reversedString;
     
+        for (char c : str) {
+            charStack.push(c);
+        }
+    
+        while (!charStack.empty()) {
+            reversedString += charStack.top();
+            charStack.pop();
+        }
+    
+        return reversedString;
+    }
 
+Notable Comparisons
+    mine:
+        Used stack<string> stack, which made forced me to convert char to string inside
+         of the for each loop.
+    other:
+        Used stack<char> stack, which is most efficient because string is composed of char types.
 
+----------------------------------------------------------------------------------------
 
