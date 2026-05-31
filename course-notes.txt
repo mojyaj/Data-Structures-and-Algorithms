@@ -3097,6 +3097,7 @@ Stack Talking Points
         - 'push' - an item is added to the top of the stack
         - O(1)
     - vector - data type
+        - stacks are commonly implemented using a vector
         - std::vector
         - Not fundamentally a stack structure
         - A dynamic array
@@ -3329,6 +3330,52 @@ int dequeue() {
 *End of Section 11 & Section 12
 
 ----------------------------------------------------------------------------------------
+
+*Start of Section 13: <> S&Q: Interview / Leetcode Exercises
+
+----------------------------------------------------------------------------------------
+
+Coding Exercise 39: Stack: Push for a Stack That Uses a Vector
+
+Write the push() method to add an item onto a stack that is implemented with a vector.
+    - 'top', use vector::peek()
+    - 'height', use vector::size();
+
+Input:
+    The function is a member of the Stack class, which has a private member stackVector, a vector<int> representing the stack.
+
+Output:
+    The function should not return any value, but it should add the given value to the top of the stack.
+
+Constraints:
+    The push() function should work correctly for stacks of any size, including empty stacks.
+
+Description:                                   
+- This method adds a new element to the top    
+  of the stack (push).                         
+- Inserts 'value' to the end of 'stackVector'. 
+- Return type: void                            
+
+Consider the following stack:
+    Stack:
+    5
+    4
+    3
+    2
+    1
+
+After calling push(6) with the Stack object, the stack should look like this:
+    Stack:
+    6
+    5
+    4
+    3
+    2
+    1
+
+My algorithm:
+    
+
 
 
 
