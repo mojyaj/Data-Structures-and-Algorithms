@@ -3415,7 +3415,41 @@ The purpose of Exercise 39 & 40 are to show that C++ vectors have all the necess
 
 ----------------------------------------------------------------------------------------
 
+67. Stack: Reverse String
 
+---
+
+Coding Exercise 41: Stack: Reverse String
+
+Implement a function called reverseString() that reverses the input string 
+using a stack data structure.
+
+C++ stack reference from W3Schools: https://www.w3schools.com/cpp/cpp_stacks.asp
+
+Input:
+    The function takes a constant reference to a string str.
+
+Output:
+    The function should return a new string that is the reverse of the input string str.
+
+Constraints:
+    The input string may contain any printable ASCII characters.
+
+Examples:
+    Consider the following input string:
+        str: "hello"
+
+    After calling reverseString(str), the result should be:
+        "olleh"
+
+    Consider the following input string:
+        str: "Udemy"
+
+    After calling reverseString(str), the result should be:
+        "ymedU"
+
+My Algorithm:
+    
 
 
 
