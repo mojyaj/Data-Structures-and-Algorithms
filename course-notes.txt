@@ -3374,7 +3374,47 @@ After calling push(6) with the Stack object, the stack should look like this:
     1
 
 My algorithm:
-    
+    void push(int value) {
+        stackVector.push_back(value);
+    }
+
+The above is the same as Instructor's solution.
+
+----------------------------------------------------------------------------------------
+
+Coding Exercise 40: Stack: Pop for a Stack That Uses a Vector 
+
+Add a member function to the Stack class that we started in the last exercise called 
+    pop() that removes the top element from the stack if it is not empty.
+
+Remember: This Stack implementation uses a vector instead of a Linked List.
+
+Input:
+    The function is a member of the Stack class, which has a private member stackVector, 
+    a vector<int> representing the stack.
+
+Output:
+    The function should not return any value, but it should remove the top element from 
+    the stack if it is not empty. If the stack is empty, the function should do nothing.
+
+Constraints:
+    The pop() function should work correctly for stacks of any size, including empty stacks.
+
+My algorithm:
+    void pop() {
+            if (stackVector.size() == 0) return;
+            stackVector.pop_back();
+        }
+
+The purpose of Exercise 39 & 40 are to show that C++ vectors have all the necessary tools to 
+    function as a 'stack'
+    - peek()        ->  'top'
+    - push_back()   ->  'push'
+    - pop_back()    ->  'pop'
+    - size()        ->  'height'
+
+----------------------------------------------------------------------------------------
+
 
 
 
