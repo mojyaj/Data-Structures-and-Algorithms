@@ -3493,3 +3493,77 @@ Notable Comparisons
 
 ----------------------------------------------------------------------------------------
 
+68. Stack: Parentheses Balanced
+
+Description:                                
+- This function checks if the input string  
+  'parentheses' has balanced parentheses.   
+- Uses a stack to hold the open parentheses.
+- Return type: bool                         
+
+---
+
+Implement a function called isBalancedParentheses() that checks if the input string contains balanced parentheses.
+
+Input:
+    The function takes a constant reference to a string parentheses.
+
+Output:
+    The function should return a boolean value indicating whether the input string contains balanced parentheses or not.
+
+Constraints:
+    The input string may contain any printable ASCII characters, but the function should only consider the opening and closing parentheses '(' and ')' for determining balance.
+
+Examples:
+    Consider the following input string:
+        parentheses: "()"           
+    After calling isBalancedParentheses(parentheses), the result should be:
+        true
+
+    Consider the following input string:
+        parentheses: "(()))"
+    After calling isBalancedParentheses(parentheses), the result should be:
+        false
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+My algorithm:
+    bool isBalancedParentheses(const string& str) {
+        stack<char> stack;
+        
+        for (char c : str) {
+            if ( c == '(' ) {
+                stack.push(c);
+            } else if ( c == ')' && ( stack.empty() || stack.top() != '(' ) ) {
+                return false;
+            } else {
+                stack.pop();
+            }
+        }
+
+        return stack.empty(); // return true if stack is empty
+    }
+
+Instructor's algorithm:
+    bool isBalancedParentheses(const string& parentheses) {
+        stack<char> charStack;
+        for (char p : parentheses) {
+            if (p == '(') {
+                charStack.push(p);
+            } else if (p == ')') {
+                if (charStack.empty() || charStack.top() != '(') {
+                    return false;
+                }
+                charStack.pop();
+            }
+        }
+        return charStack.empty();
+    }
+
+Both algorithms are nearly identical
+
+----------------------------------------------------------------------------------------
+
+
+
