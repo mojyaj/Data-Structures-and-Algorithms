@@ -3104,7 +3104,11 @@ Stack Talking Points
     - Adding/Removing items is O(1)
     - Stack add & remove items from the same end
     - The element/item at the very bottom 
-    
+
+Stack example,
+            (1)->(2)->(3)->(4)->(5)->(6)->nullptr
+            top
+
 5/30/2026 ----------------------------------------------------------------------------------------
 
 60. Stack: Constructor
@@ -3204,8 +3208,9 @@ int pop() {
 
 Queue Talking Points
     - properties
-        - 'first', stores the most recent Node in the Queue
-        - 'last', stores the oldest Node in the Queue
+        - 'first', stores the oldest Node in the Queue
+        - 'last', stores the most recent Node in the Queue
+            - 'last->next' must always be nullptr
         - 'length', number of elements in the Queue
     - Analogy
         - Standing in line and waiting to ...
@@ -3220,6 +3225,10 @@ Queue Talking Points
         - O(1)
         - "Dequeue"
     - Linked List should be the foundation for building a Queue
+
+Example Queue,
+     (1)->(2)->(3)->(4)->(5)->(6)->nullptr
+    first                     last
 
 ----------------------------------------------------------------------------------------
 
@@ -3282,6 +3291,42 @@ void enqueue(int value) {
     
     length++;
 }
+
+----------------------------------------------------------------------------------------
+
+66. Queue: Dequeue
+
+Description:                                       
+- This method removes a node from the front        
+  of the queue (dequeue).                          
+- Updates 'first' pointer and decreases 'length'.  
+- If the queue is empty, it returns INT_MIN.       
+- Otherwise, returns the value of the removed node.
+- Return type: int                                 
+
+---
+
+Coding Exercise 38: Queue: Dequeue
+
+int dequeue() {
+    if (length == 0 ) return INT_MIN;
+    
+    Node* toDelete = first;
+    int dequeuedValue = toDelete->value;
+    
+    if (length == 1) {
+        first = nullptr;
+        last = nullptr;
+    } else {
+        first = first->next;
+    }
+    
+    delete toDelete;
+    length--;
+    return dequeuedValue;
+}
+
+*End of Section 11 & Section 12
 
 ----------------------------------------------------------------------------------------
 
