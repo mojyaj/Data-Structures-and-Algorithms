@@ -15,8 +15,7 @@ bool isBalancedParentheses(const string& str) {
         }
     }
 
-    if (stack.empty()) return true;
-    else return false;
+    return stack.empty();
 }
 
     //   +=====================================================+

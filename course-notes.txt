@@ -3380,7 +3380,7 @@ My algorithm:
 
 The above is the same as Instructor's solution.
 
-----------------------------------------------------------------------------------------
+5/31/2026 ----------------------------------------------------------------------------------------
 
 Coding Exercise 40: Stack: Pop for a Stack That Uses a Vector 
 
@@ -3563,7 +3563,122 @@ Instructor's algorithm:
 
 Both algorithms are nearly identical
 
-----------------------------------------------------------------------------------------
+6/6/2026 ----------------------------------------------------------------------------------------
 
+69. Stack: Sort Stack
+
+Description:                                       
+- This function sorts the input stack 'inputStack'.
+- Uses an additional stack for sorting.            
+- Return type: void 
+
+---
+
+Coding Exercise 43: Stack: Sort Stack
+
+Implement a function called sortStack() that sorts a given stack of integers in ascending 
+    order using an additional stack.
+
+Input:
+    The function takes a reference to a stack of integers inputStack, with an arbitrary size.
+
+Output:
+    The function should not return any value, but it should modify the input stack in-place 
+    such that the elements are sorted in ascending order, with the smallest element at the top.
+
+Constraints:
+    The input stack may contain positive or negative integers. The function must use only one 
+    additional stack for sorting purposes, and no other data structures are allowed.
+    **may use a few ordinary variables (int temp, Node* temp
+
+Examples:
+    Consider the following input stack:
+        inputStack:
+            5
+            2
+            7
+            1
+    After calling sortStack(inputStack), the input stack should be:
+        inputStack:
+            1
+            2
+            5
+            7
+
+    Consider the following input stack:
+        inputStack:
+           -3
+            0
+            4
+           -1
+
+        After calling sortStack(inputStack), the input stack should be:
+        inputStack:
+            -3
+            -1
+            0
+            4
+
+My algorithm:
+    void sortStack(stack<int>& inputStack) {
+        if (inputStack.size() <= 1) return;
+
+        stack<int> tempStack{};
+        int temp = inputStack.top(); // INT_MIN means "no value to swap"
+        inputStack.pop();
+
+        while (!inputStack.empty()) {
+            if (tempStack.empty()) {
+                tempStack.push(temp);
+                temp = inputStack.top();
+                inputStack.pop();
+            }
+
+            if (temp >= tempStack.top()) {
+                tempStack.push(temp);
+                temp = inputStack.top();
+                inputStack.pop();
+            } 
+            
+            if (temp < tempStack.top()) {
+                inputStack.push(tempStack.top());
+                tempStack.pop();
+            }
+
+            if (inputStack.empty()) {
+                tempStack.push(temp);
+                temp = INT_MIN;
+            }
+        }
+
+        while (!tempStack.empty()) {
+            int move = tempStack.top();
+            inputStack.push(move);
+            tempStack.pop();
+        }
+    }
+
+Instructor's: Much cleaner and slightly faster
+    void sortStack(stack<int>& inputStack) {
+    stack<int> additionalStack;
+ 
+    while (!inputStack.empty()) {
+        int temp = inputStack.top();
+        inputStack.pop();
+ 
+        while (!additionalStack.empty() && additionalStack.top() > temp) {
+            inputStack.push(additionalStack.top());
+            additionalStack.pop();
+        }
+ 
+        additionalStack.push(temp);
+    }
+ 
+    while (!additionalStack.empty()) {
+        inputStack.push(additionalStack.top());
+        additionalStack.pop();
+    }
+
+----------------------------------------------------------------------------------------
 
 
