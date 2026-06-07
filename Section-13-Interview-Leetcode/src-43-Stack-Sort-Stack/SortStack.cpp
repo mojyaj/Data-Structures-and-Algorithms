@@ -18,6 +18,7 @@ void sortStack(stack<int>& inputStack) {
     inputStack.pop();
 
     while (!inputStack.empty()) {
+        
         if (tempStack.empty()) {
             tempStack.push(temp);
             temp = inputStack.top();

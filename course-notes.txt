@@ -3681,4 +3681,68 @@ Instructor's: Much cleaner and slightly faster
 
 ----------------------------------------------------------------------------------------
 
+70. Queue Using Stacks
+
+---
+
+Coding Exercise 44: Queue Using Stacks: Enqueue
+
+***
+Document:
+
+In a typical queue, the enqueue operation is used to add an item to the end of the queue. 
+    In this problem, you are required to implement the enqueue method, but there's a twist.  
+    The underlying data structure is not a typical array or linked list; instead, you are 
+    using two stacks (stack1 and stack2) to simulate the behavior of a queue. 
+
+Background:
+
+A stack is a Last-In-First-Out (LIFO) data structure. A queue, on the other hand, is a 
+    First-In-First-Out (FIFO) data structure. The challenge here is to use the properties 
+    of two stacks to simulate the behavior of a queue. Specifically, you will be working 
+    with the enqueue operation, which should add items to the end of the simulated queue.
+
+You're provided with a partial implementation of the QueueUsingTwoStacks class. 
+
+Here's what you have:
+    - A front method that retrieves the front element of the queue without removing it.
+    - An isEmpty method that checks if the queue is empty.
+    - A partially implemented enqueue method.
+    - The two stacks are represented by stack1 and stack2.
+
+Task:
+    Complete the enqueue method of the QueueUsingTwoStacks class.
+
+Constraints:
+    - The enqueue operation should have a time complexity of O(1). This means you can only use constant-time operations in its implementation.
+    - You can only use standard stack operations: push, pop, top, and empty.
+    - You should not use any other data structures or helper methods.
+
+***
+
+VERY EASY:
+    simply push the new value into the 'stack'
+    example,  stack.push(value);
+
+Coding Exercise 44: Queue Using Stacks: Enqueue
+
+Description:                                    
+- This method adds a new value to the end of the
+  queue (enqueue) using 'stack1'.               
+- Return type: void                             
+
+Time Complexity: O(1)
+*if enqueue a real 'Queue', then time complexity would be O(n)
+
+My algorithm:
+    void enqueue(int value) {
+        stack1.push(value);
+    }
+
+Instructor's:
+    void enqueue(int value) {
+        stack1.push(value);
+    }
+
+----------------------------------------------------------------------------------------
 
