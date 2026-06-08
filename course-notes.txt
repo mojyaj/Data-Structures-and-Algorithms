@@ -3821,7 +3821,67 @@ Instructor's:   *This one is O(1)
 'stack2' holds items in the correct order for dequeueing.
 
 *End of Section 13
+
+6/7/2026 ----------------------------------------------------------------------------------------
+
+*Section 14: Trees 
+    and
+*Section 15: <> BST: Coding Exercises
+
 ----------------------------------------------------------------------------------------
 
+71. Trees: Intro & Terminology
 
+Binary Tree Nodes
+    - A binary tree is a hierarchical data structure where each node can have at most two children
+    - have 2 pointers that can point to another node
+        1) left
+        2) right
+    - 'Binary Node' terminology
+        - can point to two different nodes below them.
+    - 'Parent Node'  terminology
+        - a node that points to 1 or 2 child nodes
+        - every node can only have 1 parent node
+    - 'Child Node'  terminology 
+        - a node that extends downward from another node, AKA a parent node
+        - can also become parent nodes
+    - 'Leaf Node'  terminology
+        - a node that has no child nodes
+        - does not point to any nodes
+    - 'Full Tree'  terminology
+        - 'Describes a Binary Tree where every node either points to 2 nodes OR zero nodes'
+        - 2 condition where every node points to
+            1) 2 nodes
+            2) 0 nodes
+        - example,   A
+                    / \
+                   B   C
+                  / \
+                 D   E
+              This is a Full Tree
+    - 'Perfect Tree' terminology
+        - A perfect binary tree satisfies two conditions
+            1) Every internal node has exactly two children.
+            2) All leaf nodes are at the same level.
+        - example,    A
+                    /   \
+                   B     C
+                  / \   / \
+                 D   E F   G
+              This tree is Full and Complete
+    - 'Complete Tree'  terminology
+        - A 'Perfect Tree' which has no gaps
+        - All levels are completely filled except possibly the last, which is filled from left to right.
+        - example,    A
+                    /   \
+                   B     C
+                  / \   /
+                 D  E  F
+            Complete, but not perfect.
+
+    - Complete Trees represent the best possible balance and efficiency
+        - Searching
+        - Inserting
+        - Traversing
+        
 
