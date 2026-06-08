@@ -3888,27 +3888,76 @@ Binary Tree Nodes
 
 72. Binary Search Trees: Example
 
-Binary Search Tree
-    - A special type of binary tree that maintains an ordering rule
-        1) All values in the left subtree  <  node value
-        2) All values in the right subtree >  node Value
-    - Example:   50
-                /  \
-              25    75
-             / \    / \
+Binary Search Tree 
+    - A special type of binary tree that maintains an ordering rule 
+        1) All values in the left subtree  <  node value 
+        2) All values in the right subtree >  node Value 
+    - Example:   50 
+                /  \ 
+              25    75 
+             / \    / \ 
            10  35  60  90
-        This is a valid Binary Search Tree
-    - Ordering allows efficient searching
-    - "Left subtree  < Node < Right subtree"
-        - Lower values < Middle Value < Greater Values
-    - 'Inorder Traversal'  terminology
-        - produces the values in sorted order
-        - Rule for every node:
-            1) Visit the left subtree
-            2) Visit the current node
-            3) Visit the right subtree
-            *just remember: Left -> Node -> Right
+        This is a valid Binary Search Tree 
+    - Ordering allows efficient searching 
+    - "Left subtree  < Node < Right subtree" 
+        - Lower values < Middle Value < Greater Values 
+    - 'Inorder Traversal'  terminology 
+        - produces the values in sorted order 
+        - Rule for every node: 
+            1) Visit the left subtree 
+            2) Visit the current node 
+            3) Visit the right subtree 
+            *just remember: Left -> Node -> Right 
 
-----------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------- 
+
+73. BST: Big O 
+
+Search algorithms:
+
+           50             2^1 - 1 = 1 steps 
+          /  \           
+        25    75          2^2 - 1 = 2 steps 
+       / \    / \        
+      10  35  60  90      2^3 - 1 = 3 steps
+    
+    *As the tree grows larger, subtracing 1 becomes negligible
+    *Searching for the value 60 only takes 3 steps 
+
+    - O(logn) 
+    - Logarithmic Time Complexity 
+    - Best case scenario is when there is a 'Perfect Tree' -- O(logn) : O(Ω) 'Big O Omega'
+    - Worst case scenario is when there is an 'Unbalanced Tree' -- O(n) : O(Ο) 'Big O Omicron'
+        - example,    10
+                        \
+                         20
+                            \
+                             30
+                                \
+                                 40
+                                   \
+                                    50
+                    This tree is Unbalanced. O(n) Linear Time Complexity
+    - 'Unbalanced Tree'  terminology
+        - occurs when the nodes are heavily skewed to one side, causing the height of the left and right subtrees to differ by more than 1
+    - 'Balanced Tree'  terminology
+        - A tree keeps its height as small as possible
+        - smaller the tree height is better
+            - faster search, insert, and delete operations
+    - 'Height'  terminology
+        - The longest path from the root to a leaf
+    - Insert() is O(n)
+    - Search() is (logn)
+    - Remove() is (logn)
+    - Comparison with linked lists
+        - LL Insert() is O(1)
+        - LL Search() is O(n)
+        - LL Remove() is O(n)
+    - O(logn) is faster than O(n)
+
+---------------------------------------------------------------------------------------- 
+
+
+
 
 
