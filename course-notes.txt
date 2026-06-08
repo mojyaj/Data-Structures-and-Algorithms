@@ -3884,4 +3884,31 @@ Binary Tree Nodes
         - Inserting
         - Traversing
         
+----------------------------------------------------------------------------------------
+
+72. Binary Search Trees: Example
+
+Binary Search Tree
+    - A special type of binary tree that maintains an ordering rule
+        1) All values in the left subtree  <  node value
+        2) All values in the right subtree >  node Value
+    - Example:   50
+                /  \
+              25    75
+             / \    / \
+           10  35  60  90
+        This is a valid Binary Search Tree
+    - Ordering allows efficient searching
+    - "Left subtree  < Node < Right subtree"
+        - Lower values < Middle Value < Greater Values
+    - 'Inorder Traversal'  terminology
+        - produces the values in sorted order
+        - Rule for every node:
+            1) Visit the left subtree
+            2) Visit the current node
+            3) Visit the right subtree
+            *just remember: Left -> Node -> Right
+
+----------------------------------------------------------------------------------------
+
 
