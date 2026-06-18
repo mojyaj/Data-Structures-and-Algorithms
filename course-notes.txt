@@ -24,7 +24,7 @@ Personal Thoughts on Course
     - Instructors clearly shows that he used AI to write the 'Test.cpp' file
         for 58. DLL: Partition List
         - example, 
-                    🧪 Test Case 2: All values < x (x = 5)
+                    Test Case 2: All values < x (x = 5)
     - Constraints in the document was not explained very well
         - Coding Exercise 31: DLL: Reverse Between
         - "This method must reverse the nodes in-place by rearranging the 'next' and 'prev' 
@@ -32,6 +32,10 @@ Personal Thoughts on Course
         - I assumed it meant I couldn't create a 'temp' Node* inside the loop which would be used
             for swapping nodes like in the singly linked list 'reverseBetween()' method.
         - I assumed that I could only perform swapping with only the 
+    - MISSING CONTEXT:
+        'Amortized Analysis'
+        - Instructor did not mention this topic in 'Coding Exercise 45: Queue Using Stacks: Dequeue'
+        - Amortized Analysis explains why Dequeue using stacks time complexity is O(1) and not O(n)
 
 ----------------------------------------------------------------------------------------
 
@@ -3800,6 +3804,8 @@ My Algorithm:   *This one is O(n)
     }
 
 Instructor's:   *This one is O(1)
+                *Amortized time complexity
+                *Trivia: Amortized Analysis
     void dequeue() {
 
         if (stack2.empty()) {
@@ -4006,7 +4012,142 @@ public:
     }
 }
 
+6/17/2026 ---------------------------------------------------------------------------------------- 
+
+75. BST: Insert - Intro 
+
+Psuedo Code: 
+    1) Create newNode 
+    2) if root == nullptr, 
+        set root = newNode 
+    3) set temp = root
+        *temp node is used to traverse the tree
+    4) while loop 
+        if newNode == temp, 
+            return false 
+        if newNode < left node, 
+            else > right node
+        if nullptr insert newNode, 
+            else move to next node 
+
+---
+
+Coding Exercise 47: BST: Insert
+
+Implement the insert member function that adds an element to the Binary Search Tree (BST) in the 
+BinarySearchTree class.
+
+The function should return a bool value, indicating whether the insertion was successful or not.
+
+The member function should perform the following tasks:
+    1) Create a new Node with the provided value:
+    2) Allocate memory for a new Node object, passing the value to its constructor.
+
+Check if the tree is empty:
+    If the root pointer is nullptr, set the root pointer to the new Node and return true.
+
+Traverse the tree to find the appropriate position for the new Node:
+    1) Create a temporary pointer temp pointing to the root Node of the BST.
+    2) Enter a loop that continues until a suitable position for the new Node is found or the value 
+        is found to be already present in the tree.
+        a) If the new Node's value is equal to the current Node's value, exit the loop and return false (duplicate values are not allowed).
+        b) If the new Node's value is less than the current Node's value:
+            - If the current Node's left child pointer is nullptr, set the left child pointer to the new Node and return true.
+            - Otherwise, update the temporary pointer temp to point to the left child Node.
+        c) If the new Node's value is greater than the current Node's value:
+            - If the current Node's right child pointer is nullptr, set the right child pointer to the new Node and return true.
+            - Otherwise, update the temporary pointer temp to point to the right child Node.
+
+Description:                                      
+    - This method inserts a new value into the tree.  
+    - A new node is created for the value.            
+    - Starts at root and finds the correct location.  
+    - Return type: bool                               
+                                                  
+Tips:                                             
+    - If the tree is empty (root == nullptr), set root
+    to the new node and return true.                
+    - Use a while loop to find the correct location.  
+    - If the value already exists, return false.      
+    - Insert the new node at the correct position.    
+    - Check output from Test.cpp in "User logs".      
+
+My Solution:
+    bool insert(int value) {
+        Node* newNode = new Node(value);
+        if (root == nullptr) {
+            root = newNode;
+            return true;
+        }
+
+        Node* temp = root;
+        while (temp) {
+            //if (newNode->value == temp->value) return false; // redundant
+            if (newNode->value < temp->value) {
+                if (temp->left == nullptr) {
+                    temp->left = newNode;
+                    return true;
+                }
+                temp = temp->left;      // no 'else' block improves readability
+            } else if (newNode->value > temp->value) {
+                if (temp->right == nullptr) {
+                    temp->right = newNode;
+                    return true;
+                } else {
+                    temp = temp->right;  // Could improve readability by removing by not wrapping this line in a 'else' block
+                }
+            } else { // newNode->value is same value as one of the child nodes
+                return false; // This could confuse readers
+            }
+        }
+    }
+
+Instructor's solution: 
+    bool insert(int value) { 
+        Node* newNode = new Node(value); 
+        if (root == nullptr) { 
+            root = newNode; 
+            return true; 
+        } 
+        Node* temp = root; 
+        while(true) { 
+            if (newNode->value == temp->value) return false; 
+            if (newNode->value < temp->value) { 
+                if (temp->left == nullptr) { 
+                    temp->left = newNode; 
+                    return true; 
+                } 
+                temp = temp->left; 
+            } else { 
+                if (temp->right == nullptr) { 
+                    temp->right = newNode; 
+                    return true; 
+                } 
+                temp = temp->right; 
+            } 
+        } 
+    } 
+
+Notable differences: 
+    I don't have the line: 
+        - if (newNode->value == temp->value) return false; 
+            Instead I use 'else if' statement and reaching the 'else' statement means that there the 
+            'newNode' stores the same value as one of the child nodes 
+        - less preferable & readable 
+            This could be harder to read and it does not eliminate the edge case immediately as a best
+            practice 
+    
+Memory Leak in both solutions: 
+    if value == temp->value  (edge case)
+    *'newNode' needs to be deleted before exiting 
+
+Same performance:
+    Balanced BST	            O(log n)
+    Worst Case (unbalanced)	    O(n)
+
 ---------------------------------------------------------------------------------------- 
+
+
 
 
 
