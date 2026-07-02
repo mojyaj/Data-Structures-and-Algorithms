@@ -4145,7 +4145,98 @@ Same performance:
     Balanced BST	            O(log n)
     Worst Case (unbalanced)	    O(n)
 
----------------------------------------------------------------------------------------- 
+7/2/2026 ---------------------------------------------------------------------------------------- 
+
+77. BST: Contains - Intro
+
+Talking Points
+    - Edge Case: if root == nullptr, then return false
+    - Create a temporary variable to traverse the tree
+    - Comparison & Traversal
+        - Compare 'search value' with 'temp value'
+            - if 'search value' == 'temp value', return true
+            - if 'search value' < 'temp value', set 'temp' to 'left'
+            - if 'search value' < 'temp value', set 'temp' to 'right'
+            - if 'left' or 'right' is nullptr, then return false
+                - while (temp != nullptr)
+
+---
+
+BST: Contains
+
+Implement the contains member function that checks if an element exists in the Binary Search 
+    Tree (BST) in the BinarySearchTree class.
+
+The function should return a bool value, indicating whether the value is present in the tree or not.
+
+The member function should perform the following tasks:
+
+1) Check if the tree is empty:
+    If the root pointer is nullptr, return false.
+
+2) Traverse the tree to find the target value:
+    - Create a temporary pointer temp pointing to the root Node of the BST.
+    - Enter a loop that continues until the target value is found or the end of the tree is reached.
+        - If the target value is less than the current Node's value, update the temporary pointer temp to point to the left child Node.
+        - If the target value is greater than the current Node's value, update the temporary pointer temp to point to the right child Node.
+        - If the target value is equal to the current Node's value, return true (the value is present in the tree).
+
+3) Return false if the target value is not found in the tree.
+       
+Description:                                        
+- This method checks if the tree contains a value.  
+- Starts at root and goes left or right based on    
+  value comparison.                                 
+- Return type: bool                                 
+                                                    
+Tips:                                               
+- If the tree is empty (root == nullptr), return    
+  false immediately.                                
+- Traverse down the tree based on value comparison. 
+- If value is found, return true.                   
+- If reached the end, return false.                 
+- Check output from Test.cpp in "User logs".        
+
+My solution:
+    bool contains(int value) {
+            if (root == nullptr) return false;
+            
+            Node* temp = root;
+            
+            while (temp != nullptr) {
+                if (value == temp->value) { // this line could be placed inside a simple 'else' body instead
+                    return true;
+                } 
+                else if (value < temp->value) {
+                    temp = temp->left;
+                }
+                else if (value > temp->value) {
+                    temp = temp->right;
+                }
+            }
+            
+            return false;
+    }
+
+Instructor's solution: 
+     bool contains(int value) {
+            if (root == nullptr) return false;
+            Node* temp = root;
+            while (temp) {
+                if (value < temp->value) {
+                    temp = temp->left;
+                } else if (value > temp->value) {
+                    temp = temp->right;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        }
+    * cleaner, clearer, and avoids unnecessary comparisons.
+
+
+--------------------------------------------------------------------------------------- 
 
 
 
