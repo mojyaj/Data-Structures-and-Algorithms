@@ -45,6 +45,13 @@ TOLEARN:
             the algorithm does not need to maintain a separate list of visited nodes
     2) Sliding Window Technique
 
+Testing Notes:
+    - Error: This version of d:\Independent_Studies\Data-Structures-and-Algorithms\Section-18-HT-Interview-Leetcode\ItemInCommon\Test.exe 
+             is not compatible with the version of Windows you're running. Check your computer's system information and then contact the 
+             software publisher
+      Fix:   Include the associated .cpp file at the top of each Test.cpp per exercise
+             The correctness of the include files is not important for testing while learning in this course
+
 ----------------------------------------------------------------------------------------
 
 Big O Cheat Sheet:  https://www.bigocheatsheet.com/
@@ -4714,6 +4721,52 @@ Consider the following input vector:
 After calling findDuplicates(nums), the result should be:
     {}
 
+ +=====================================================+
+ |                 WRITE YOUR CODE HERE                |
+ | Description:                                        |
+ | - This function finds duplicate integers in a given |
+ |   vector.                                           |
+ | - It uses an unordered_map to count each integer's  |
+ |   occurrences.                                      |
+ | - Loops through the map to find duplicates.         |
+ |                                                     |
+ | Return type: vector<int>                            |
+ |                                                     |
+ | Tips:                                               |
+ | - 'numCounts' keeps track of each integer's count.  |
+ | - 'duplicates' stores duplicate integers found.     |
+ | - Check output from Test.cpp in "User logs".        |
+ +=====================================================+
+
+vector<int> findDuplicates(const vector<int>& nums) {
+    unordered_map<int, int> numCounts;
+    
+    for (int n: nums) {
+        
+        numCounts[n]++;
+    }
+
+    vector<int> duplicates;
+    for (const auto& entry: numCounts)
+    {
+        if (entry.second > 1)
+        {
+            duplicates.push_back(entry.first);
+        }
+    }
+        
+    return duplicates;
+}
+
+Clean Summary
+    1.) Counts how many times each number appears
+    2.) Collects numbers whose count is greater than 1
+    3.) Returns those numbers
+
 ---------------------------------------------------------------------------------------- 
+
+
+
+
 
 
