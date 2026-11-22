@@ -4685,6 +4685,9 @@ FIX:    bool itemInCommon(const vector<int>& vect1, const vector<int>& vect2)
             - const
             - &
 
+TakeAway
+    Using a hash table (unordered_map) to find a common element between two vectors efficiently
+
 ---------------------------------------------------------------------------------------- 
 
 Section 18: <> HT: Coding Exercises
@@ -4763,10 +4766,49 @@ Clean Summary
     2.) Collects numbers whose count is greater than 1
     3.) Returns those numbers
 
+TakeAway
+    Not really about finding duplicates. It's about learning when and why hash tables are useful.
+
 ---------------------------------------------------------------------------------------- 
 
+Section 18: <> HT: Coding Exercises
 
+Coding Exercise 55: HT: First Non-Repeating Character ( ** Interview Question)
 
+Implement a function called firstNonRepeatingChar() that finds and returns the first non-repeating 
+character in a given string.
 
+Input:
+    The function takes a constant reference to a string input_string.
+
+Output:
+    The function should return a character which is the first non-repeating character in the input 
+    string. If no non-repeating character is found, the function should return a null character ('\0').
+
+Constraints:
+    The input string may contain any printable ASCII characters.
+
+My Solution:
+    char firstNonRepeatingChar(const string& input_string) {
+        unordered_map<int, char> charCounts;
+
+        for (char c: input_string) {
+            charCounts[c]++;
+        }
+
+        for (char c: input_string) {
+            if (charCounts[c] == 1) return c;
+        }
+        
+        return '\0';
+    }
+
+*Exactly the same as Instructor's solution
+
+TakeAway
+    A hash table can help you count occurrences, but sometimes you still need the original order of 
+    the data
+
+---------------------------------------------------------------------------------------- 
 
 
