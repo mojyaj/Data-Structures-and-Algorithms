@@ -5,9 +5,9 @@
 
 using namespace std;
 
-// Strategy: move lower value stack elements to the bottom of a second stack
-//           once that is completed then, move all elements from 'tempStack' 
-//           to 'inputStack'.
+// Strategy: move lower value stack nodes to the bottom of a 'tempstack'
+//           once that is completed then, move all node values from 'tempStack' 
+//           to 'inStack'.
 
 /**/  // My solution:
 void sortStack(stack<int>& inputStack) {
@@ -48,9 +48,24 @@ void sortStack(stack<int>& inputStack) {
         tempStack.pop();
     }
 }
+        /* Not gonna work:
+         tempStack.push(INT_MAIN)
+         While (!inStack.empty())
+          if (temp > tempStack.top()) {
+              tempStack.push(temp);
+              temp = inStack.top();
+              inStack.pop();
+          }
+          else {
+              inStack.push(tempStack.top());
+              tempStack.pop();
+              tempStack.push(temp);
+         tempStack.push(temp);
+         while (!tempStack.empty())
+        */ 
 /**/
 
-/* // Instructor's solution. faster and cleaner
+/** / // Instructor's solution. faster and cleaner
 void sortStack(stack<int>& inputStack) {
     stack<int> additionalStack;
  

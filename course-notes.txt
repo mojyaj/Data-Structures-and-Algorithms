@@ -37,6 +37,14 @@ Personal Thoughts on Course
         - Instructor did not mention this topic in 'Coding Exercise 45: Queue Using Stacks: Dequeue'
         - Amortized Analysis explains why Dequeue using stacks time complexity is O(1) and not O(n)
 
+TOLEARN:
+    1) DFS algorithm
+        - 'Depth First Search'
+        - Tree traversal algorithm that starts at the root node and explores as far down each branch 
+            as possible before backtracking. Unlike general graphs, trees do not contain cycles, so 
+            the algorithm does not need to maintain a separate list of visited nodes
+    2) Sliding Window Technique
+
 ----------------------------------------------------------------------------------------
 
 Big O Cheat Sheet:  https://www.bigocheatsheet.com/
@@ -1548,7 +1556,7 @@ Time Complexity: O(n)
             while(current != nullptr) {
 
                 if (current->value < x) {
-                    prev1->next->next = current; // set dummy1-next
+                    prev1->next->next = current; // set dummy1->next
                     prev1->next = current;       // set prev1->next
                 } else {
                     prev2->next->next = current; 
@@ -2678,6 +2686,9 @@ Observations:
 
 58. DLL: Partition List
 
+ISSUE:  This DoublyLinkedList class does not contain a member 'tail'
+        This is not a complete function for a Doubly Linked List
+
 Rearrange the nodes in a doubly linked list so that all nodes with values less than a 
     given integer x appear before nodes with values greater than or equal to x.
 
@@ -2702,6 +2713,9 @@ Time Complexity: O(n)
 ---
 
 Coding Exercise 30: DLL: Partition List
+
+ISSUE:  This DoublyLinkedList class does not contain a member 'tail'
+        This is not a complete function for a Doubly Linked List
 
 My algorithm:
     void partitionList(int x) {
@@ -2815,6 +2829,8 @@ Includes this document:
 
 Instructor's test cases are not named apropriately
     - I gave each test case it's own name
+
+Time Complexity: O(n + m) Linear Complexity
 
 My algorithm:
     void reverseBetween(int n, int m) {
@@ -3062,9 +3078,12 @@ Notable Comparisons:
                     Node dummy(0);
                     dummy->next = head;
                     *This is safest
+        - Traverse the list with 'middle' pointer
+
     other:
         - No heap allocation
             - preferable to avoid ownership of Heap memory if possible
+        - Traverses the list with 'head' (pointer) member of DoubleLinkedList
         - Updates 'head' at the end of every iteration
 
 *End of Section 10
@@ -3092,9 +3111,10 @@ Stack Talking Points
         - Cannot get any plates below until the very top plate is removed
     - FIFO  protocol
         - Last-In  First-Outer
-        - Last item placed into a list is the First item to be removed
+        - (L)Last item placed (I)into a list is the (F)First item to be (O)removed
     - pop - key terminology
         - 'pop' - the item at the top of the stack is removed
+                AND return the value of the removed node
         - 'pop' off
         - O(1)
     - push - key terminology
@@ -3107,8 +3127,7 @@ Stack Talking Points
         - A dynamic array
         - Provides all necessary functionality to behave exactly like a 'stack'
     - Adding/Removing items is O(1)
-    - Stack add & remove items from the same end
-    - The element/item at the very bottom 
+    - Stack can only add & remove items from the same end
 
 Stack example,
             (1)->(2)->(3)->(4)->(5)->(6)->nullptr
@@ -3217,19 +3236,29 @@ Queue Talking Points
         - 'last', stores the most recent Node in the Queue
             - 'last->next' must always be nullptr
         - 'length', number of elements in the Queue
+        - Nodes
+            - 'next' pointer
+            - 'last->next' is always nullptr
     - Analogy
         - Standing in line and waiting to ...
         - The first person who enters the line is the first person that can leave the line
     - FIFO  protocol
         - First-In  First-Out
         - First element added  will be the  first element to exit out  of the list
-    - enQueue(), adds items to the Queue
-        - O(1)
-        - "Enqueue"
-    - deQueue(), removes items to the Queue
-        - O(1)
-        - "Dequeue"
     - Linked List should be the foundation for building a Queue
+    - enQueue(), adds an item to the Queue
+        - "Enqueue"
+        - Add a new node to the 'last' side
+            - set 'last->next' = 'new node'
+            - set 'last' = 'new node'
+            - height++
+        - O(1)
+    - deQueue(), removes an item from the Queue
+        - "Dequeue"
+        - Remove the oldest node - 'first'
+            - remember to assign 'first->next' as the new 'first'
+            - height-- 
+        - O(1)
 
 Example Queue,
      (1)->(2)->(3)->(4)->(5)->(6)->nullptr
@@ -3664,24 +3693,27 @@ My algorithm:
 
 Instructor's: Much cleaner and slightly faster
     void sortStack(stack<int>& inputStack) {
-    stack<int> additionalStack;
- 
-    while (!inputStack.empty()) {
-        int temp = inputStack.top();
-        inputStack.pop();
- 
-        while (!additionalStack.empty() && additionalStack.top() > temp) {
+        stack<int> additionalStack;
+    
+        while (!inputStack.empty()) {
+            int temp = inputStack.top();
+            inputStack.pop();
+    
+            while (!additionalStack.empty() && additionalStack.top() > temp) {
+                inputStack.push(additionalStack.top());
+                additionalStack.pop();
+            }
+    
+            additionalStack.push(temp);
+        }
+    
+        while (!additionalStack.empty()) {
             inputStack.push(additionalStack.top());
             additionalStack.pop();
         }
- 
-        additionalStack.push(temp);
     }
- 
-    while (!additionalStack.empty()) {
-        inputStack.push(additionalStack.top());
-        additionalStack.pop();
-    }
+
+*Both are O(n^2) time complexity
 
 ----------------------------------------------------------------------------------------
 
@@ -3868,14 +3900,29 @@ Binary Tree Nodes
               *Also a Complete Tree, because leaf nodes are contiguous from left-side to right-side
 
     - 'Complete Tree'  terminology
-        - A 'Perfect Tree' which has no gaps
+        - All top levels are filled from left to right
+        - Last level is filled from left to right and there is not gap
         - All levels are completely filled except possibly the last, which is filled from left to right.
         - example,    A
                     /   \
                    B     C
                   / \   /
                  D  E  F
-            Complete, but not perfect.
+            Complete, filled from left to right
+        - example,    A
+                    /   \
+                   B     C
+                  / \   / \
+                 D  E  F   G
+            Complete & Full & Perfect 
+        - example,    A
+                    /   \
+                   B     C
+                  / \     \
+                 D  E      G
+            Broken Tree
+
+
     - Complete Trees represent the best possible balance and efficiency
         - Searching
         - Inserting
@@ -3955,9 +4002,9 @@ Search algorithms:
             - faster search, insert, and delete operations 
     - 'Height'  terminology 
         - The longest path from the root to a leaf 
-    - Insert() is O(n) 
-    - Search() is (logn) 
-    - Remove() is (logn) 
+    - Insert() is O(n)
+    - Search() is (log n) 
+    - Remove() is (log n) 
     - Comparison with linked lists 
         - LL Insert() is O(1) 
         - LL Search() is O(n) 
@@ -4235,10 +4282,438 @@ Instructor's solution:
         }
     * cleaner, clearer, and avoids unnecessary comparisons.
 
+*End of Section 14: Trees
+    and
+End of Sectin 15: <> BST: Coding Exercises
 
---------------------------------------------------------------------------------------- 
+11/21/2026 ---------------------------------------------------------------------------------------- 
 
+Start of Section 16: Hash Tables
 
+---------------------------------------------------------------------------------------- 
 
+79. Hash Table: Intro
+
+Hash Table 
+    - Key  : Value   
+        - Example, 
+            - Item : Quantity 
+            - 'nails' : 1000 
+    - Address Space - The range of a valid array indices or slots that a hash function maps keys into
+        - Often called,
+            Index Space
+            Bucket Space
+            Slot Space
+    - Hash Function - a function that performs a calculation on the 'Key' and outputs an address where 
+                        the item will be stored in the 'Address Space' 
+                        - 'Deterministic' - the 'hash function' will always generate the same 'output' per 'input'
+                        - 'One Way' 
+                            * A will always generate B    A -> B 
+                            * B will not generate A       B -> 'Not A' 
+                        - Example, Hash(A) -> 2
+    - Collision - When there is more than one value at an 'Address Space' 
+        - Example, Hardware Store 
+            0   |   
+            1   |   
+            2   |   {'nails' : 1000}
+                    {'nuts'  : 6000}    * Collision
+            3   |   
+            4   |   {'bolts' : 5000}
+            5   |   
+            6   |   
+    - Resizing / Rehashing - When elements are added and the table fills up past a load threshold, the address space expands
+                             and existing keys are rehashed into the new index range.
+    - Table capacity - the total number of slots in the primary array
+    - Key universe - U, the full set of possible input keys
+
+---------------------------------------------------------------------------------------- 
+
+80. HT: Collisions
+
+*Watch video for less details
+
+Strategies for resolving collisions in a hash table
+
+    - Separate Chaining - Storing two or more 'Key/Value' pairs at the same address/bucket each slot in the table holds a pointer to a 
+                            secondary data structure—most commonly a linked list
+        - How it works: When a collision happens at index i, the 'new key-value pair' is simply 'appended to the linked list' at index i
+        - Lookup: Hash the key to find index i, then traverse the linked list at that slot until you find the matching key
+        - Pros: Simple to implement; never truly "runs out" of space (load factor can exceed 1.0); deletion is straightforward.
+        - Cons: Extra memory overhead for pointers; poor CPU cache locality because linked list nodes are scattered in memory
+
+    - Linear Probing (Open Addressing) - One element per address/bucket space; Each stored directly inside the hash table array itself—no linked lists 
+                                         or external pointers are used
+        - How it works: If a key hashes to index i and that slot is already occupied, linear probing checks the next sequential slot (i + 1, i + 2, etc., 
+                        wrapping around to 0 at the end of the array) until it finds the first empty slot
+        - Lookup: Hash the key to index i. If the key isn't there, keep stepping forward (i + 1, i + 2...) until you either find the key or hit an empty 
+                    slot (which proves the key isn't in the table)
+        - Pros: Excellent CPU cache performance of contiguous memory; zero pointer overhead
+        - Cons: Suffers from primary clustering (long contiguous runs of occupied slots build up, slowing down inserts and lookups); deletion requires 
+                special "tombstone" markers so future lookups don't stop prematurely
+
+---------------------------------------------------------------------------------------- 
+
+Section 17: <> HT: Coding Exercises
+
+Coding Exercise 49: HT: Constructor
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//   +=====================================================+
+//   |                 WRITE YOUR CODE HERE                |
+//   | Description:                                        |
+//   | - This is the Node class for key-value pairs.       |
+//   | - It includes a constructor to initialize the node. |
+//   | - Sets the 'key' and 'value' and sets 'next' to     |
+//   |   nullptr.                                          |
+//   | - Return type: N/A (constructor)                    |
+//   |                                                     |
+//   | Tips:                                               |
+//   | - Use 'this->key' and 'this->value' to set the      |
+//   |   key and value.                                    |
+//   | - Initialize 'next' pointer to nullptr.             |
+//   | - Check output from Test.cpp in "User logs".        |
+//   +=====================================================+
+
+class Node
+{
+public:
+    string key;
+    int  value;
+    Node* next;
+    
+    Node(string key, int value)
+    {
+        this->key = key;
+        this->value = value;
+        next = nullptr;
+    }
+};
+
+class HashTable {
+    private:
+        static const int SIZE = 7;
+        Node* dataMap[SIZE];
+
+    public:
+        HashTable() {
+            for(int i = 0; i < SIZE; i++) {
+                dataMap[i] = nullptr;
+            }
+        }
+        
+        // ---------------------------------------------------
+        //  Destructor code is similar to keys() function
+        //  Watch that video to help understand how this works
+        // ---------------------------------------------------
+        ~HashTable() {
+            for(int i = 0; i < SIZE; i++) {
+                Node* head = dataMap[i];
+                Node* temp = head;
+                while (head) {
+                    head = head->next;
+                    delete temp;
+                    temp = head;
+                }
+            }
+        }
+        
+        void printTable() {
+            for(int i = 0; i < SIZE; i++) {
+                cout << "Index " << i << ": ";
+                if(dataMap[i]) {
+                    cout << "Contains => ";
+                    Node* temp = dataMap[i];
+                    while (temp) {
+                        cout << "{" << temp->key << ", " << temp->value << "}";
+                        temp = temp->next;
+                        if (temp) cout << ", ";
+                    }
+                    cout << endl;
+                } else {
+                    cout << "Empty" << endl;
+                }
+            }
+        }     
+};
+
+---------------------------------------------------------------------------------------- 
+
+Section 17: <> HT: Coding Exercises
+
+Coding Exercise 50: HT: Set
+
+Implement the set member function for the HashTable class that inserts a key-value pair 
+into the hash table. If the key already exists in the table, the function should update 
+its value.
+
+Input:
+    - A string 'key', representing the key of the new element to be added to the hash table.
+    - An integer 'value', representing the value associated with the key.
+
+The member function should perform the following tasks:
+    - Calculate the hash index for the given key using a suitable hash function.
+    - Create a new node called 'newNode' with the provided 'key' and 'value'.
+    - Check if the 'dataMap' entry at the calculated index is nullptr:
+    - If it is, set the 'dataMap' entry at the index to the new node.
+
+If the 'dataMap' entry at the index is not nullptr:
+    - Traverse the linked list at the 'dataMap' entry until the end or the key is found.
+    - If the key is found, update its value and return.
+    - If the key is not found, insert the new node at the end of the linked list.
+
+My Solution:
+    void set(string key, int value) {
+        int index = hash(key);
+        Node* newNode = new Node(key, value);
+        if (dataMap[index] == nullptr) {
+            dataMap[index] = newNode;
+        }
+        else {
+            Node* current = dataMap[index];
+            while (current->next || current->key == newNode->key) {
+                if (current->key == newNode->key) {
+                    current->value = newNode->value;
+                    delete newNode;
+                    return;
+                }
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+    }
+    ** This solution behaves correctly
+
+My Revised Solution:
+    void set(string key, int value) {
+        int index = this->hash(key);
+        Node* newNode = new Node(key, value); // potential memory leak
+        if (dataMap[index] == nullptr) {
+            dataMap[index] = newNode;
+        }
+        else {
+            Node* current = dataMap[index];
+            while (current) {
+                if (current->key == newNode->key) {
+                    current->value = newNode->value;
+                    delete newNode; // delete 'newNode'
+                    return;
+                }
+                if (!current->next) {
+                    break;
+                }
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+    }
+
+My 2nd Revised Solution:
+    void set(string key, int value) {
+        int index = this->hash(key);
+
+        Node* current = dataMap[index];
+        while (current) {
+            if (current->key == key) {
+                current->value = value;
+                return;
+            }
+            if (!current->next) {
+                Node* newNode = new Node(key, value);
+                current->next = newNode;
+                return;
+            }
+            current = current->next;
+        }
+
+        Node* newNode = new Node(key, value);
+        dataMap[index] = newNode; // First element is nullptr, therefore, assign 'newNode'
+    }
+    ** This solution is preferable: 
+
+Instructor's Solution:
+    void set(string key, int value) {
+        int index = hash(key);
+        Node* newNode = new Node(key, value);
+        if (dataMap[index] == nullptr) {
+            dataMap[index] = newNode;
+        } else {
+            Node* temp = dataMap[index];
+            while (temp->next != nullptr) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+    ** This solution broke a constraint: "If the key is found, update its value and return."
+
+---------------------------------------------------------------------------------------- 
+
+Section 17: <> HT: Coding Exercises
+
+Coding Exercise 51: HT: Get
+
+Implement the 'get' member function for the HashTable class that retrieves the value associated 
+with a given key from the hash table. If the key is not found, return 0.
+
+Input:
+    - A string 'key', representing the key of the element to be retrieved from the hash table.
+
+The member function should perform the following tasks:
+    - Calculate the hash index for the given key using a suitable hash function.
+    - Create a temporary pointer 'temp' pointing to the 'dataMap' entry at the calculated index.
+
+Traverse the linked list at the 'dataMap' entry using the temporary pointer:
+    - If the key of the current node matches the given key, return the value of that node.
+    - If the key is not found in the linked list, return 0.
+
+My Solution:
+    int get(string key) {
+        int index = hash(key);
+        Node* current = dataMap[index];
+        while (current) {
+            if (current->key == key) {
+                return current->value;
+            }
+            current = current->next;
+        }
+        return 0;
+    }
+
+Instructor's Solution:
+    int get(string key) {
+            int index = hash(key);
+            Node* temp = dataMap[index];
+            while (temp != nullptr) {
+                if (temp->key == key) return temp->value;
+                temp = temp->next;
+            }
+            return 0;
+        }
+
+Both are almost exactly identical
+    - O(1) using 'Separate Chaining'
+        1) Compute the hash -> O(1)
+        2) Jump directly to the bucket -> O(1)
+        3) Search a short linked list (roughly constant size) -> O(1)
+      These operations equate to O(1) on average.
+
+---------------------------------------------------------------------------------------- 
+
+Section 17: <> HT: Coding Exercises
+
+Coding Exercise 52: HT: Keys
+
+Implement the keys member function for the HashTable class that retrieves all the keys present in the hash table and returns them in a vector.
+
+The member function should perform the following tasks:
+    - Create an empty vector of strings called allKeys to store the keys.
+    - Iterate over the dataMap array.
+    - For each non-empty entry in dataMap, create a temporary pointer temp pointing to the entry.
+
+Traverse the linked list at the dataMap entry using the temporary pointer:
+    - Add the key of the current node to the allKeys vector.
+    - Return the allKeys vector containing all the keys in the hash table.
+
+My Solution:
+    vector<string> keys() {
+        vector<string> allkeys;
+        for (int i = 0; i < SIZE; i++) {
+            Node* temp = dataMap[i];
+            while (temp) {
+                allkeys.push_back(temp->key);
+                temp = temp->next;
+            }
+        }
+        return allkeys;
+    }
+    ** Exactly identical to instructor's solution
+
+---------------------------------------------------------------------------------------- 
+
+Section 18: <> HT: Coding Exercises
+
+Coding Exercise 53: HT: Interview / LeetCode exercises
+
+Implement a function called itemInCommon() that checks if two input vectors have at least 
+    one common item.
+
+Input:
+    The function takes two vectors of integers as input parameters:
+        vect1: a vector of integers
+        vect2: a vector of integers
+
+Output:
+    - The function should return a boolean value indicating whether the two input vectors 
+        have at least one item in common or not.
+
+Constraints:
+    - The input vectors may have duplicate integers.
+
+My Solution:
+    bool itemInCommon(vector<int> vect1, vector<int> vect2) {
+        unordered_map<int,bool> hashtable;
+        
+        for (int v: vect1) {
+            hashtable.insert({v,true});
+        }
+
+        for (int w: vect2) {
+            if (hashtable[w]) return true;
+            // ISSUE: 'hashtable[w]' - if 'w' does not exist, then 'w' is inserted into the 'hashtable' with a default value of 'false'
+            // FIX:    if (hashtable.find(w) != hashtable.end())
+            //         Above is safer
+        }
+        
+        return false;
+    }
+    ** Nearly identical to instructor's solution
+
+ISSUE:  The function copies both vectors and if they are both very LARGE vectors, then copying would be wasting space
+FIX:    bool itemInCommon(const vector<int>& vect1, const vector<int>& vect2)
+        Use const references instead
+            - const
+            - &
+
+---------------------------------------------------------------------------------------- 
+
+Section 18: <> HT: Coding Exercises
+
+Coding Exercise 54: HT: Find Duplicates ( ** Interview Question)
+
+Implement a function called findDuplicates() that finds and returns all the duplicate 
+elements in a given vector of integers.
+
+Input:
+    The function takes a constant reference to a vector of integers nums.
+
+Output:
+    The function should return a vector of integers containing all the duplicate elements 
+    in the input vector nums. The order of the elements in the output vector does not matter.
+
+Examples:
+
+Consider the following input vector:
+
+nums: {1, 2, 3, 4, 4, 5, 5, 6, 7, 8}
+After calling findDuplicates(nums), the result should be:
+    {4, 5}
+
+Consider the following input vector:
+    nums: {10, 20, 30, 20, 40, 50, 30}
+
+After calling findDuplicates(nums), the result should be:
+    {20, 30}
+
+Consider the following input vector:
+    nums: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+
+After calling findDuplicates(nums), the result should be:
+    {}
+
+---------------------------------------------------------------------------------------- 
 
 
